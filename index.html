@@ -238,6 +238,7 @@ select.sel {
 .gr-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
 .gr-card .b { justify-self: start; margin-top: 2px; }
 .gr-like { font-style: italic; }
+.gr-card p.gr-src { font-size: 0.78rem; border-top: 1px solid var(--line); padding-top: 6px; }
 .gr-table th, .gr-table td { text-align: left; white-space: normal; font-family: var(--font-body); font-size: 0.9rem; vertical-align: top; }
 .gr-table td:first-child { white-space: nowrap; font-weight: 600; }
 .gr-bench { margin-top: 2px; }
@@ -408,14 +409,55 @@ select.sel {
       </div>
     </section>
 
+    <section class="gr-sec" aria-labelledby="gr-h7">
+      <span class="gr-step">7</span>
+      <div class="gr-body">
+        <h2 id="gr-h7">Alan bugün nerede?</h2>
+        <p>Kitaplar 2001 ve 2011'de yazıldı. O günden beri alanda neler değişti? Güncel makalelerden altı başlık:</p>
+        <div class="gr-cards">
+          <div class="gr-card" data-fam="rob">
+            <b>🔬 Hâlâ çoğunlukla laboratuvarda</b>
+            <p>Gösteriler etkileyici: 2014'te 1024 küçük robot (Kilobot) kendi kendine harf ve şekil oluşturdu; 2022'de 10 avuç içi büyüklüğünde drone sık bir bambu ormanında birbirine çarpmadan uçtu. Ama 2025'te yayımlanan bir makaleye göre (Winfield vd., “Etik ve güvenlik” kartı), yazıldığı tarihte ticari olarak kullanılan gerçek bir robot sürüsü yoktu.</p>
+            <p class="gr-src">Rubenstein, Cornejo &amp; Nagpal, <i>Science</i> 345, 2014 · Zhou vd., “Swarm of micro flying robots in the wild”, <i>Science Robotics</i>, 2022 · Dorigo, Theraulaz &amp; Trianni, “Swarm robotics: past, present, and future”, <i>Proc. IEEE</i> 109(7), 2021</p>
+          </div>
+          <div class="gr-card" data-fam="rob">
+            <b>🔋 Sahaya çıkmanın önündeki engeller</b>
+            <p>Pil süresi kısa; robotların birbirinin yerini bilmesi (konumlama) zor; simülasyonda çalışan kural gerçek robotta aynı çalışmıyor. Sanayide bütün bir sürü algoritması yerine genellikle sadece parçaları (toplanma, formasyon gibi “temel davranışlar”) kullanılıyor.</p>
+            <p class="gr-src">Schranz vd., “Swarm robotic behaviors and current applications”, <i>Frontiers in Robotics and AI</i> 7, 2020</p>
+          </div>
+          <div class="gr-card" data-fam="opt">
+            <b>🐺 Hayvan adlı algoritmalara dikkat</b>
+            <p>Gri kurt, ateş böceği, yarasa, balina gibi adlarla çıkan algoritmalar ayrıntılı incelendiğinde büyük ölçüde PSO'daki fikirlerin yeni adlarla tekrarı çıktı. 90'dan fazla araştırmacı bu konuda açık bir mektup yayımladı. Ders: bir algoritmayı adıyla ya da benzetmesiyle değil, ne yaptığıyla değerlendir.</p>
+            <p class="gr-src">Camacho-Villalón, Dorigo &amp; Stützle, <i>International Transactions in Operational Research</i> 30(6), 2023 · Aranha vd., “Metaphor-based metaheuristics, a call for action”, <i>Swarm Intelligence</i> 16, 2022</p>
+          </div>
+          <div class="gr-card" data-fam="rob">
+            <b>🧠 Kuralları elle yazmak yerine öğrenmek</b>
+            <p>Bu laboratuvardaki kuralları insanlar elle tasarladı. Yeni bir yaklaşım: her robota küçük bir sinir ağı (grafik sinir ağı) verip, her şeyi bilen merkezi bir denetleyiciyi taklit etmeyi öğretmek. Robot yine sadece komşularıyla konuşuyor, ama ne yapacağını öğrenmiş oluyor.</p>
+            <p class="gr-src">Tolstaya vd., “Learning decentralized controllers for robot swarms with graph neural networks”, <i>CoRL</i>, PMLR 100, 2020</p>
+          </div>
+          <div class="gr-card" data-fam="rob">
+            <b>💬 Dil modelleri ve sürüler</b>
+            <p>2024'ten beri büyük dil modelleri sürülerde iki şekilde deneniyor: robotların kodunu yazıp kontrol etmek, ya da her robota kendi dil modelini verip robotların doğal dille plan yapmasını sağlamak. Bu çalışmalar henüz çok erken aşamada ve çoğu kavram düzeyinde.</p>
+            <p class="gr-src">Strobel, Dorigo &amp; Fritz, “LLM2Swarm”, NeurIPS 2024 çalıştayı (arXiv:2410.11387) · “Large language models for multi-robot systems: a survey”, arXiv:2502.03814, 2025</p>
+          </div>
+          <div class="gr-card" data-fam="rob">
+            <b>⚖️ Etik ve güvenlik</b>
+            <p>Sürüler gerçek dünyaya çıkmadan önce sorulması gereken sorular: bir robot arızalanınca ne olur, insan nerede devreye girer, sorumluluk kimde? Yeni çalışmalar, her sürü tasarımı için önceden bir etik risk değerlendirmesi yapılmasını öneriyor.</p>
+            <p class="gr-src">Winfield, Swana, Ives &amp; Hauert, “On the ethical governance of swarm robotic systems in the real world”, <i>Phil. Trans. R. Soc. A</i> 383, 2025</p>
+          </div>
+        </div>
+        <p class="ref">Bu konularda ilk okunacak iki genel bakış: Dorigo, Theraulaz &amp; Trianni, “Reflections on the future of swarm robotics”, <i>Science Robotics</i> 5(49), 2020 ve aynı yazarların 2021 <i>Proceedings of the IEEE</i> makalesi. Bir sonraki ders kitabı için: Hamann, <i>Swarm Robotics: A Formal Approach</i>, Springer, 2018.</p>
+      </div>
+    </section>
+
     <section class="lower">
       <article class="card">
-        <span class="eyebrow">7 · Kendini yokla</span>
+        <span class="eyebrow">8 · Kendini yokla</span>
         <h2>Cevabı açmadan önce kendin söyle</h2>
         <div class="gr-quiz" id="gr-quiz"></div>
       </article>
       <article class="card">
-        <span class="eyebrow">8 · Sözlük</span>
+        <span class="eyebrow">9 · Sözlük</span>
         <h2>Diğer sekmelerde karşına çıkacak kelimeler</h2>
         <dl class="knobs gr-gloss">
           <dt>Ajan</dt><dd>Sürünün tek bir bireyi: kuş, karınca, robot ya da sanal parçacık.</dd>
@@ -430,10 +472,10 @@ select.sel {
         </dl>
       </article>
       <article class="card" style="grid-column:1 / -1">
-        <span class="eyebrow">9 · Sırada ne var?</span>
+        <span class="eyebrow">10 · Sırada ne var?</span>
         <h2>Laboratuvarı bu sırayla gez</h2>
         <ol class="gr-path" id="gr-path"></ol>
-        <p class="ref">Kaynak: Kennedy, Eberhart &amp; Shi, <i>Swarm Intelligence</i> (2001), Böl. 1–3 ve 7; Gazi &amp; Passino, <i>Swarm Stability and Optimization</i> (2011), Böl. 1–2. Ayrıntılı okuma planı Notion'daki “Adım Adım Başlangıç Rehberi”nde.</p>
+        <p class="ref">Kaynak: Kennedy, Eberhart &amp; Shi, <i>Swarm Intelligence</i> (2001), Böl. 1–3 ve 7; Gazi &amp; Passino, <i>Swarm Stability and Optimization</i> (2011), Böl. 1–2. Güncel makaleler 7. bölümde. Ayrıntılı okuma planı Notion'daki “Adım Adım Başlangıç Rehberi”nde.</p>
       </article>
     </section>
   </div>
@@ -538,6 +580,7 @@ select.sel {
       </ul>
       <p>Üç isteğin her biri kaydırıcıdaki ağırlıkla çarpılıp toplanır, kuşun hızı bu toplam kadar değişir ve kuş bir adım ilerler. <b>Adım adım</b> düğmesiyle seçili kuşun üç okunu tek tek inceleyebilirsin.</p>
       <p class="ref">Kitapta: Kennedy &amp; Eberhart, <i>Swarm Intelligence</i>, Böl. 3, "Staying Together but Not Colliding", s. 109–115 (PDF ≈ s. 138–144). Bu kuralların kanıtlı hâli: Gazi &amp; Passino, Böl. 2.1 ve 3.2.</p>
+        <p class="ref">Güncel: Bu kuralları elle yazmak yerine öğretmek de mümkün. Tolstaya vd., “Learning decentralized controllers for robot swarms with graph neural networks”, CoRL, PMLR 100, 2020: her robot sadece komşularıyla konuşan küçük bir sinir ağıyla merkezi bir sürü denetleyicisini taklit etmeyi öğreniyor.</p>
     </article>
 
     <article class="card">
@@ -860,6 +903,7 @@ select.sel {
         </ol>
         <p>Seçili parçacıkta üç ok uç uca çizilir: gri, mavi ve turuncu okların toplamı parçacığı kesikli daireden yeni yerine taşır. <b>Adım adım</b> ile bunu tur tur izleyebilirsin.</p>
         <p class="ref">Kitapta: Kennedy &amp; Eberhart Böl. 7, s. 287–314 (PDF ≈ 316–343); pseudocode s. 313 (PDF ≈ 342). Patlama, constriction ve topoloji: Böl. 8, s. 328–359 (PDF ≈ 357–388). Mühendislik bakışı: Gazi &amp; Passino Böl. 12.1–12.3, s. 251–270 (PDF ≈ 263–282).</p>
+        <p class="ref">Güncel: Gri kurt, ateş böceği, yarasa gibi “yeni” algoritmaların büyük ölçüde PSO fikirlerinin tekrarı olduğunu gösteren çalışma: Camacho-Villalón, Dorigo &amp; Stützle, <i>International Transactions in Operational Research</i> 30(6), 2023.</p>
         <p class="ref">Kuşlar sekmesiyle bağı: PSO, Kennedy'nin kuş sürüsü simülasyonundan doğdu. Kuşlar komşularının yönüne bakıyordu; parçacıklar komşularının bulduğu en iyi yere bakıyor.</p>
       </article>
 
@@ -1292,6 +1336,7 @@ select.sel {
           <dt>σ</dt><dd>Çevre haritası. Düşük yer iyi (yiyecek), yüksek yer kötü (tehlike). −∇σ robotu yokuş aşağı, iyi yere iter.</dd>
         </dl>
         <p class="ref">Kitapta: Gazi &amp; Passino Böl. 2.1–2.2 (s. 15–18, PDF ≈ 27–30); kümelenme ve kanıt Böl. 3.2 (s. 30–46, PDF ≈ 42–58); sosyal yiyecek arama Böl. 3.3 (s. 46–64, PDF ≈ 58–76). Önerilen sıra: önce 3.2.5 simülasyon örnekleri (s. 44), sonra 3.2.1 fonksiyon tasarımı (s. 30).</p>
+        <p class="ref">Daha fazla oku: Brambilla, Ferrante, Birattari &amp; Dorigo, “Swarm robotics: a review from the swarm engineering perspective”, <i>Swarm Intelligence</i> 7(1), 2013 · Hamann, <i>Swarm Robotics: A Formal Approach</i>, Springer, 2018 (toplanma, sürü hâlinde uçuş, görev paylaşımı için kısa bir ders kitabı).</p>
         <p class="ref">Diğer sekmelerle bağı: Kuşlar sekmesindeki “ayrıl + birleş” kurallarının kanıtlı hâli. Çevre açıkken bu, Parçacıklar sekmesindeki PSO'nun gerçek robotlarla yapılmış hâli: iyi bölgeye çekil, ama gruptan kopma.</p>
       </article>
       <article class="card">
@@ -1437,6 +1482,7 @@ select.sel {
           <dt>Bağlantılı</dt><dd>Ağda her drone'dan her drone'a bir yol varsa herkes aynı sayıda buluşur. Kopuk parçalar ayrı ayrı anlaşır.</dd>
         </dl>
         <p class="ref">Kitapta: Gazi &amp; Passino Böl. 2.4 (s. 20–22, PDF ≈ 32–34), Böl. 9 “Asynchronous Distributed Agreement” (s. 197–213, PDF ≈ 209–225). Önce 9.1 model (s. 197) ve 9.4 simülasyonlar (s. 208), sonra 9.2–9.3 kanıtlar.</p>
+        <p class="ref">Daha fazla oku: Olfati-Saber, Fax &amp; Murray, “Consensus and cooperation in networked multi-agent systems”, <i>Proceedings of the IEEE</i> 95(1), 2007. Bu sekmedeki anlaşma kuralının kontrol teorisi açısından klasik anlatımı: gecikme, kopan bağlantılar ve yakınsama hızı.</p>
         <p class="ref">Diğer sekmelerle bağı: Kuşlar sekmesindeki “hizalan” kuralı aslında yön üzerinde bir anlaşma. Görev pazarı sekmesinde drone'lar bir sayı değil, “kim hangi işi yapacak” kararı üzerinde anlaşacak.</p>
       </article>
       <article class="card">
@@ -1587,6 +1633,7 @@ select.sel {
           <dt>Kalp atışı</dt><dd>Komşusundan sinyal gelmeyen drone onu “düştü” sayar, onun görevlerini boşa çıkarır ve bu haberi de dedikoduyla yayar.</dd>
         </dl>
         <p class="ref">Kaynak: Eser &amp; Yılmaz, “A Gossip-Based Auction Algorithm for Decentralized Task Rescheduling in Heterogeneous Drone Swarms”, IEEE TAES 61(3), 2025. Okuma sırası: Bölüm III-D (mutabakat problemi), IV-B “Task Assignment Module” (Algoritma 3, denklem 20 ve 24–27), Tablo V (dedikodu kuralları), sonra V. bölüm sonuçları.</p>
+        <p class="ref">Daha fazla oku: Choi, Brunet &amp; How, “Consensus-based decentralized auctions for robust task allocation”, <i>IEEE Transactions on Robotics</i> 25(4), 2009. Açık artırma ile anlaşmayı birleştiren klasik yöntem (CBBA); belli varsayımlar altında çakışmasız bir plana ulaşıldığını kanıtlıyor.</p>
         <p class="ref">Sadeleştirmeler: zaman pencereleri, drone tipleri, ön-artırma teklifindeki “maxTaskInc” değeri ve şifreli kimlik doğrulama burada yok. Sinerji turu makaledekinden basit. Drone'lar planlama boyunca yerinde duruyor.</p>
         <p class="ref">Diğer sekmelerle bağı: Anlaşma sekmesinde drone'lar bir sayının ortalamasında buluşuyordu. Burada her görev için “en düşük teklif” üzerinde buluşuyorlar (min-mutabakat). Ağ kopuksa orada da burada da anlaşma olmuyor.</p>
       </article>
@@ -1838,7 +1885,7 @@ select.sel {
           </table>
         </div>
         <p class="status" id="mv-status" role="status"></p>
-        <p class="ref">Kaynak: rehberin 5.3 bölümü (Sürü Hareket Testi). Boids: Kennedy Böl. 3 ve Kuşlar sekmesindeki kurallar (açık alanda, duvarsız). Gazi çekim–itme ve ε sınırı: Gazi &amp; Passino Böl. 3.2; foraging: Böl. 3.3, robot sekmesindeki çanak ortamı (k = 3). Rehberdeki planda 50 başlangıç ve 60 sn yazıyordu; burada diğer sekmelerle aynı olsun diye 30 başlangıç ve 300 adım kullandım.</p>
+        <p class="ref">Kaynak: rehberin 5.3 bölümü (Sürü Hareket Testi). Boids: Kennedy Böl. 3 ve Kuşlar sekmesindeki kurallar (açık alanda, duvarsız). Çekim–itme kuralı ve ε sınırı: Gazi &amp; Passino Böl. 3.2; foraging: Böl. 3.3, robot sekmesindeki çanak ortamı (k = 3). Rehberdeki planda 50 başlangıç ve 60 sn yazıyordu; burada diğer sekmelerle aynı olsun diye 30 başlangıç ve 300 adım kullandım.</p>
       </article>
     </section>
   </div>
@@ -6794,7 +6841,7 @@ select.sel {
       { name: "Bakteri (BFO)", one: "Takla at, işler iyiye gidiyorsa aynı yönde yüz. İyi olanlar çoğalır, bazıları başka yere savrulur.", like: "Karanlık odada yemek kokusuna doğru yürümek.", tab: "kb" },
       { name: "Yapay arı kolonisi (ABC)", one: "Kaşif arılar yeni yerler dener, işçi arılar iyi kaynakları daha sık ziyaret eder.", like: "Mahallede en iyi fırını bulan arkadaşın herkese tarif etmesi." },
       { name: "Ateş böceği", one: "Her böcek kendinden daha parlak (daha iyi) olana doğru uçar; parlaklık uzaklaştıkça azalır.", like: "Karanlıkta en parlak ışığa doğru yürümek." },
-      { name: "Hayvan adlı diğerleri", one: "Son yıllarda kurt, balina, yarasa adlı çok sayıda algoritma çıktı. Çoğu PSO'nun bir benzeri. Önce PSO ve karıncayı iyi öğren.", like: "Aynı yemeğin farklı adlarla satılması." },
+      { name: "Hayvan adlı diğerleri", one: "Son yıllarda kurt, balina, yarasa adlı çok sayıda algoritma çıktı. İncelenenlerin çoğu PSO fikirlerinin yeni adla tekrarı çıktı (7. bölüm). Önce PSO ve karıncayı iyi öğren.", like: "Aynı yemeğin farklı adlarla satılması." },
     ],
     rob: [
       { name: "Toplanma", one: "Her robot gördüğü komşuların ortasına yürür; sürü bir ya da birkaç noktada toplanır.", like: "Bu sayfadaki gösteri.", tab: "gr-demo" },
