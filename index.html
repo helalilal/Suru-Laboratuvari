@@ -238,6 +238,9 @@ select.sel {
 .gr-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
 .gr-card .b { justify-self: start; margin-top: 2px; }
 .gr-like { font-style: italic; }
+.au-ctrl { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; }
+.au-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+@media (max-width: 760px) { .au-grid { grid-template-columns: minmax(0, 1fr); } }
 .gr-card p.gr-src { font-size: 0.78rem; border-top: 1px solid var(--line); padding-top: 6px; }
 .gr-table th, .gr-table td { text-align: left; white-space: normal; font-family: var(--font-body); font-size: 0.9rem; vertical-align: top; }
 .gr-table td:first-child { white-space: nowrap; font-weight: 600; }
@@ -612,6 +615,54 @@ select.sel {
         </table>
       </div>
       <p class="status" id="status" role="status"></p>
+    </article>
+  </section>
+  <section class="lower">
+    <article class="card" style="grid-column:1 / -1" aria-labelledby="au-h">
+      <span class="eyebrow">Yeni bakış · otomatik tasarım</span>
+      <h2 id="au-h">Kuralı bilgisayar bulsun</h2>
+      <p style="max-width:80ch">Yukarıdaki ağırlıkları (ayrıl, hizalan, birleş) biz elle seçtik. Başka bir yol: bilgisayara iyi bir sürünün nasıl puanlanacağını söyle, ağırlıkları kendisi arasın. Bu aslında “Dağda hazine” sekmesindeki problemin aynısı: dağ puan, haritadaki yer de (ayrıl, hizalan, birleş) üçlüsü. Arama yöntemi orada gördüğümüz tepe tırmanma: en iyi ayarı biraz değiştir, sürüyü simüle et, puan yükseldiyse yeni ayarı tut.</p>
+      <div class="eq" aria-label="Puan formülü">Puan = (<span class="t-in">Düzen</span> + <span class="t-soc">Güvenlik</span> + <span class="t-cog">Birlik</span>) / 3</div>
+      <dl class="knobs">
+        <dt>Düzen</dt><dd>Kuşlar aynı yöne mi uçuyor? Hizalanma: 1 = hepsi aynı yön, 0 = herkes başka yöne.</dd>
+        <dt>Güvenlik</dt><dd>En yakın komşusuna en az 10 px uzak duran kuşların oranı. 1 = kimse kimseye fazla yaklaşmıyor.</dd>
+        <dt>Birlik</dt><dd>1 / grup sayısı. Tek sürü = 1, üç ayrı grup = 0.33.</dd>
+        <dt>Nasıl ölçülüyor?</dt><dd>Her ayar 60 kuşla, iki sabit başlangıçta simüle ediliyor; ilk 250 adım bekleniyor, sonraki 100 adımın ortalaması alınıyor. Arama 40 denemeyle bitiyor.</dd>
+      </dl>
+      <div class="au-ctrl">
+        <label class="check" for="au-safe"><input type="checkbox" id="au-safe" checked><span>Güvenliği puana kat<br><small>Kapatırsan puan sadece (Düzen + Birlik) / 2 olur. Ne olacağını tahmin et, sonra dene.</small></span></label>
+        <label class="check" for="au-slow"><input type="checkbox" id="au-slow" checked><span>Anlatımlı mod<br><small>Her denemeyi 3 adımda, yavaşça göster</small></span></label>
+        <div class="btnrow">
+          <button class="b primary" id="au-run">Aramayı başlat</button>
+          <button class="b" id="au-apply" disabled>Bulunan ayarı kuşlara uygula</button>
+        </div>
+      </div>
+      <div class="say">
+        <div class="phases" id="au-phases"><span>1 · Yeni ayar dene</span><span>2 · Simüle et, puanla</span><span>3 · Daha iyiyse tut</span></div>
+        <p id="au-say">Arama rastgele bir ayardan başlayacak. “Aramayı başlat”a bas.</p>
+      </div>
+      <div class="au-grid">
+        <div class="card chartcard">
+          <span class="k muted" style="font-size:0.8rem">Her deneme bir nokta (yeşil = tutuldu, kırmızı = atıldı); çizgi = en iyi puan; kesikli = elle seçilen 50/35/35</span>
+          <canvas id="au-chart" aria-label="Aramada puanın değişimi"></canvas>
+        </div>
+        <div class="card calc" aria-label="Bu denemenin hesabı">
+          <div class="calc-head"><h3>Bu denemenin hesabı</h3><span class="tag" id="au-k">Deneme 0 / 40</span></div>
+          <div class="calc-body" id="au-calc"><p class="muted">Arama başlayınca burada her denemenin ağırlıkları, üç ölçüm ve kararı görünecek.</p></div>
+        </div>
+      </div>
+      <h3>30 farklı sürüyle doğrula</h3>
+      <p class="muted" style="max-width:80ch">Arama sadece iki başlangıca bakarak karar verdi. Bulunan ayar gerçekten iyi mi, yoksa o iki sürüye mi özel? Her satır aynı 30 farklı başlangıçta ölçülüyor.</p>
+      <div class="btnrow"><button class="b" id="au-verify" disabled>Bulunan ayarı 30 sürüyle doğrula</button></div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>#</th><th>Ayar</th><th>Ayrıl</th><th>Hizalan</th><th>Birleş</th><th>Düzen</th><th>Güvenlik</th><th>Birlik</th><th>Puan (3 terim)</th></tr></thead>
+          <tbody id="au-rows"></tbody>
+        </table>
+      </div>
+      <p class="status" id="au-status" role="status"></p>
+      <p class="analogy" id="au-lesson"></p>
+      <p class="ref">Bu fikrin robot sürülerindeki adı “otomatik tasarım”: kontrol yazılımını insan değil bir optimizasyon algoritması kuruyor. Örnek: Francesca vd., “AutoMoDe: a novel approach to the automatic design of control software for robot swarms”, Swarm Intelligence 8(2), 2014. Oradaki gibi burada da sonuç, sadece puanın ölçtüğü şeyler kadar iyi.</p>
     </article>
   </section>
   </div>
@@ -2419,6 +2470,8 @@ select.sel {
     rows = EXPS.map(measurePreset); save(); renderRows();
     status("Kendi satırların silindi; örnek satırlar yeniden ölçüldü.");
   });
+  // shared with the automatic-design section below
+  window.SuruBirds = { Flock, apply(w) { ui.sep.value = w[0]; ui.ali.value = w[1]; ui.coh.value = w[2]; applyParams(); setPlaying(true); } };
 })();
 </script>
 
@@ -7105,6 +7158,178 @@ select.sel {
   let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(refresh, 120); });
   window.addEventListener("labview", (e) => { if (e.detail === "gr") refresh(); });
   const retheme = () => { Hp.readColors(); refresh(); };
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", retheme);
+  new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+})();
+</script>
+
+<script>
+/* ---------- Birds tab: let the computer find the rule (automatic design by hill climbing) ---------- */
+(function () {
+  "use strict";
+  const L = window.SuruLab, Hp = L.helpers, C = Hp.C;
+  const Flock = window.SuruBirds.Flock, mulberry32 = L.mulberry32;
+  const $ = (id) => document.getElementById(id);
+  const TAU = Math.PI * 2;
+
+  // ---------- “let the computer find the rule”: score a weight setting, then hill-climb on it ----------
+  // a setting is scored on a fixed 900×520 sky with 60 birds, averaged over two fixed flocks
+  const AUTO = { n: 60, R: 60, speed: 3, warm: 250, span: 100, seeds: [21, 22], close: 10, budget: 40 };
+  function scoreRule(w, useSafety, seeds) {
+    const parts = { order: 0, safe: 0, unity: 0 }; let samples = 0;
+    (seeds || AUTO.seeds).forEach((sd) => {
+      const f = new Flock(900, 520, { sep: w[0], ali: w[1], coh: w[2], R: AUTO.R, n: AUTO.n, speed: AUTO.speed }, sd);
+      for (let k = 0; k < AUTO.warm; k++) f.step();
+      for (let k = 0; k < AUTO.span; k++) {
+        f.step();
+        // safety: share of birds whose nearest neighbour is at least 10 px away
+        let ok = 0;
+        for (let i = 0; i < f.n; i++) {
+          let nn = Infinity;
+          for (let j = 0; j < f.n; j++) if (j !== i) { const d = Math.hypot(f.x[i] - f.x[j], f.y[i] - f.y[j]); if (d < nn) nn = d; }
+          if (nn >= AUTO.close) ok++;
+        }
+        parts.order += f.metrics.order; parts.safe += ok / f.n; parts.unity += f.metrics.groups ? 1 / f.metrics.groups : 0; samples++;
+      }
+    });
+    Object.keys(parts).forEach((k) => { parts[k] /= samples; });
+    parts.score = useSafety ? (parts.order + parts.safe + parts.unity) / 3 : (parts.order + parts.unity) / 2;
+    return parts;
+  }
+  // hill climbing on the three weights, the same idea as the treasure-on-the-mountain tab
+  function* climbRule(start, useSafety, seed) {
+    const r = mulberry32(seed), clip = (v) => Math.max(0, Math.min(100, Math.round(v)));
+    let best = start.slice(), bs = scoreRule(best, useSafety);
+    yield { k: 1, tried: best.slice(), parts: bs, accepted: true, best: best.slice(), bestParts: bs, step: 0 };
+    for (let k = 2; k <= AUTO.budget; k++) {
+      const step = 30 * Math.pow(0.15, (k - 2) / (AUTO.budget - 2));
+      const tried = best.map((v) => clip(v + step * (r() * 2 - 1) * 1.7));
+      const parts = scoreRule(tried, useSafety), accepted = parts.score >= bs.score;
+      if (accepted) { best = tried; bs = parts; }
+      yield { k, tried, parts, accepted, best: best.slice(), bestParts: bs, step };
+    }
+  }
+
+  // ---------- UI ----------
+  const A = { hist: [], best: null, bestParts: null, running: false, gen: null, phase: -1, cur: null, timer: 0 };
+  const safeOn = () => $("au-safe").checked, slow = () => $("au-slow").checked;
+  const ref = scoreRule([50, 35, 35], true);
+  const refScore = () => (safeOn() ? ref.score : (ref.order + ref.unity) / 2);
+  const w3 = (w) => `${w[0]} / ${w[1]} / ${w[2]}`;
+  const f2 = (v) => v.toFixed(2);
+  function chart() {
+    const cv = $("au-chart"), dpr = Math.min(2, window.devicePixelRatio || 1), W = Math.max(200, cv.getBoundingClientRect().width), H = 200;
+    if (cv.width !== Math.round(W * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cv.style.height = H + "px"; }
+    const g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+    const pl = 34, pr = 8, pt = 8, pb = 20, X = (k) => pl + (k - 1) / (AUTO.budget - 1) * (W - pl - pr), Y = (v) => pt + (1 - v) * (H - pt - pb);
+    g.font = "11px " + C.fontData; g.fillStyle = C.muted; g.strokeStyle = C.line; g.lineWidth = 1;
+    [0, 0.25, 0.5, 0.75, 1].forEach((v) => { g.beginPath(); g.moveTo(pl, Y(v)); g.lineTo(W - pr, Y(v)); g.stroke(); g.textAlign = "right"; g.textBaseline = "middle"; g.fillText(v.toFixed(2), pl - 4, Y(v)); });
+    g.textAlign = "center"; g.textBaseline = "alphabetic"; [1, 20, 40].forEach((k) => g.fillText(k, X(k), H - 4));
+    g.save(); g.setLineDash([5, 4]); g.strokeStyle = C.ink; g.globalAlpha = 0.7; g.beginPath(); g.moveTo(pl, Y(refScore())); g.lineTo(W - pr, Y(refScore())); g.stroke(); g.restore();
+    if (!A.hist.length) return;
+    g.strokeStyle = C.accent; g.lineWidth = 2.4; g.beginPath();
+    A.hist.forEach((h, i) => (i ? g.lineTo(X(h.k), Y(h.bestParts.score)) : g.moveTo(X(h.k), Y(h.bestParts.score)))); g.stroke();
+    A.hist.forEach((h) => { g.beginPath(); g.arc(X(h.k), Y(h.parts.score), 3.4, 0, TAU); g.fillStyle = h.accepted ? C.coh : C.sep; g.fill(); });
+  }
+  function setPhase(k) { Array.from($("au-phases").children).forEach((c, i) => { c.dataset.on = String(i === k); }); A.phase = k; }
+  function say(t) { $("au-say").textContent = t; }
+  function calcCard(st, k) {
+    const p = st.parts, prevBest = A.hist.length > 1 ? A.hist[A.hist.length - 2].bestParts.score : -Infinity;
+    const sec = (i, html) => `<div class="calc-sec" data-k="${i}" data-state="${k < 0 ? "done" : i < k ? "done" : i === k ? "now" : "future"}">${html}</div>`;
+    $("au-k").textContent = `Deneme ${st.k} / ${AUTO.budget}`;
+    $("au-calc").innerHTML =
+      sec(0, `<h4>1 · Yeni ayar dene</h4>` + (st.k === 1 ? `<p class="num">Başlangıç: rastgele bir ayar, Ayrıl / Hizalan / Birleş = <b>${w3(st.tried)}</b></p>`
+        : `<p class="num">En iyi ayar ${w3(A.hist[A.hist.length - 2].best)}; her ağırlık en fazla ±${Math.round(st.step * 1.7)} değiştirildi → <b>${w3(st.tried)}</b></p><p class="muted">Adım boyu aramanın başında büyük, sonunda küçük.</p>`)) +
+      sec(1, `<h4>2 · Simüle et, puanla</h4><p class="num">Düzen ${f2(p.order)} · Güvenlik ${f2(p.safe)} · Birlik ${f2(p.unity)}</p>
+        <p class="num">Puan = ${safeOn() ? `(${f2(p.order)} + ${f2(p.safe)} + ${f2(p.unity)}) / 3` : `(${f2(p.order)} + ${f2(p.unity)}) / 2`} = <b>${p.score.toFixed(3)}</b></p>`) +
+      sec(2, `<h4>3 · Daha iyiyse tut</h4>` + (st.k === 1 ? "<p>İlk deneme: karşılaştıracak bir şey yok, en iyi ayar bu.</p>"
+        : `<p class="num">${p.score.toFixed(3)} ${st.accepted ? "≥" : "<"} ${prevBest.toFixed(3)} → <b>${st.accepted ? "tut: yeni en iyi ayar" : "at: en iyi ayar aynı kaldı"}</b></p>`));
+  }
+  function show(st, k) {
+    calcCard(st, k);
+    if (k === 0) say(st.k === 1 ? `Deneme 1: rastgele bir ayardan başlıyoruz: ${w3(st.tried)}.` : `Deneme ${st.k}: en iyi ayarı biraz değiştirip ${w3(st.tried)} deneniyor.`);
+    else if (k === 1) say(`60 kuş bu ayarla 350 adım uçtu. Düzen ${f2(st.parts.order)}, güvenlik ${f2(st.parts.safe)}, birlik ${f2(st.parts.unity)} → puan ${st.parts.score.toFixed(3)}.`);
+    else if (k === 2) say(st.k === 1 ? "İlk ayar şimdilik en iyisi." : st.accepted ? `Puan yükseldi (ya da aynı kaldı): yeni en iyi ayar ${w3(st.best)}.` : `Puan düştü: bu ayar atıldı, en iyi ayar ${w3(st.best)} olarak kaldı.`);
+  }
+  function finish() {
+    A.running = false; $("au-run").textContent = "Aramayı yeniden başlat"; setPhase(-1);
+    $("au-apply").disabled = false; $("au-verify").disabled = false;
+    const b = A.bestParts;
+    say(`40 deneme bitti. Bulunan ayar ${w3(A.best)}: puan ${b.score.toFixed(3)} (elle seçilen 50/35/35: ${refScore().toFixed(3)}).` +
+      (!safeOn() && b.safe < 0.6 ? ` Dikkat: güvenlik sadece ${f2(b.safe)}; kuşlar birbirine giriyor. Puan güvenliği ölçmediği için bilgisayar bunu hiç umursamadı.` : "") +
+      " “Bulunan ayarı kuşlara uygula” ile sürüyü izle, sonra 30 sürüyle doğrula.");
+  }
+  function tick() {
+    if (!A.running) return;
+    if (A.phase === -1 || A.phase === 2 || !slow()) {
+      const n = A.gen.next();
+      if (n.done) { finish(); return; }
+      const st = n.value; A.cur = st; A.hist.push(st); A.best = st.best; A.bestParts = st.bestParts;
+      chart();
+      if (!slow()) { show(st, -1); say(`Deneme ${st.k}: ${w3(st.tried)} → puan ${st.parts.score.toFixed(3)}, ${st.accepted ? "tutuldu" : "atıldı"}. En iyi: ${w3(st.best)}.`); A.timer = setTimeout(tick, 0); return; }
+      setPhase(0); show(st, 0);
+    } else { setPhase(A.phase + 1); show(A.cur, A.phase); }
+    A.timer = setTimeout(tick, 900);
+  }
+  $("au-run").addEventListener("click", () => {
+    if (A.running) { A.running = false; clearTimeout(A.timer); $("au-run").textContent = "Aramaya devam et"; return; }
+    if (!A.gen || (A.hist.length && A.hist[A.hist.length - 1].k >= AUTO.budget)) {
+      const start = [0, 0, 0].map(() => Math.round(Math.random() * 100));
+      A.gen = climbRule(start, safeOn(), (Math.random() * 1e9) | 0); A.hist = []; A.phase = -1;
+      $("au-apply").disabled = true; $("au-verify").disabled = true; chart();
+    }
+    A.running = true; $("au-run").textContent = "Durdur"; tick();
+  });
+  $("au-safe").addEventListener("change", () => { clearTimeout(A.timer); A.running = false; A.gen = null; A.hist = []; $("au-run").textContent = "Aramayı başlat"; setPhase(-1); chart(); say(safeOn() ? "Puan artık güvenliği de içeriyor. Aramayı başlat." : "Puan artık sadece düzen ve birlikten oluşuyor. Bilgisayar ne bulacak? Aramayı başlat."); });
+  $("au-apply").addEventListener("click", () => { if (!A.best) return; window.SuruBirds.apply(A.best); document.getElementById("sim").scrollIntoView({ behavior: "smooth", block: "center" }); status(`Kaydırıcılar ${w3(A.best)} yapıldı; yukarıdaki sürü bu ayarla uçuyor.`); });
+
+  // ---------- 30-flock check ----------
+  const KEY = "suru-lab-auto-rows-v1", SEEDS = Array.from({ length: 30 }, (_, k) => 1000 + k);
+  const status = (t) => { $("au-status").textContent = t; };
+  let rows = Hp.loadRows(KEY), busy = false;
+  function verify(label, w, example, done) {
+    const acc = { order: 0, safe: 0, unity: 0 }; let i = 0; busy = true;
+    const step = () => {
+      const p = scoreRule(w, true, [SEEDS[i++]]); acc.order += p.order; acc.safe += p.safe; acc.unity += p.unity;
+      status(`Doğrulanıyor: ${label} · ${i} / 30`);
+      if (i < SEEDS.length) { setTimeout(step, 0); return; }
+      Object.keys(acc).forEach((k) => { acc[k] /= SEEDS.length; }); acc.score = (acc.order + acc.safe + acc.unity) / 3;
+      busy = false; done(Object.assign({ label, example, w }, acc));
+    };
+    setTimeout(step, 0);
+  }
+  function renderRows() {
+    $("au-rows").innerHTML = (rows || []).map((r, i) => `<tr><td>${i + 1}</td><td>${r.label}${r.example ? '<span class="tag">örnek</span>' : ""}</td><td>${r.w[0]}</td><td>${r.w[1]}</td><td>${r.w[2]}</td><td>${f2(r.order)}</td><td>${f2(r.safe)}</td><td>${f2(r.unity)}</td><td>${r.score.toFixed(3)}</td></tr>`).join("");
+    const by = (l) => (rows || []).find((r) => r.label === l);
+    const h = by("Elle seçilen"), c = by("Bilgisayarın bulduğu"), u = by("Güvenliği saymayan puanla bulunan");
+    $("au-lesson").textContent = h && c && u ? `30 sürüde: elle seçilen 50/35/35 ayarın puanı ${h.score.toFixed(2)}, bilgisayarın bulduğu ${w3(c.w)} ayarınki ${c.score.toFixed(2)}: daha iyi, ama arama sırasında iki sürüde gördüğü 0.79 kadar değil. Arama o iki sürüye fazla uydu; bu yüzden sonucu hep yeni sürülerle doğrulamak gerekiyor. Güvenliği saymayan puanla bulunan ${w3(u.w)} ayarda güvenlik ${f2(u.safe)}: kuşların çoğu komşusuna 10 px'ten fazla yaklaşıyor. Bilgisayar sadece ölçtüğün şeyi iyileştirir; ölçmediğin şeyi bozabilir.` : "";
+  }
+  const EXAMPLES = [["Elle seçilen", [50, 35, 35]], ["Bilgisayarın bulduğu", [64, 57, 5]], ["Güvenliği saymayan puanla bulunan", [5, 100, 5]]];
+  function examples(done) {
+    rows = []; let i = 0;
+    const next = () => { if (i >= EXAMPLES.length) { Hp.saveRows(KEY, rows); renderRows(); status("Örnek satırlar hazır: 30 farklı sürünün ortalaması."); done && done(); return; }
+      const [l, w] = EXAMPLES[i++]; verify(l, w, true, (r) => { rows.push(r); renderRows(); next(); }); };
+    next();
+  }
+  let started = false;
+  function ensureRows() { if (started) return; started = true; if (rows) renderRows(); else examples(); }
+  $("au-verify").addEventListener("click", () => {
+    if (busy || !A.best) return;
+    verify("Senin aramanın bulduğu" + (safeOn() ? "" : " (güvenliksiz puan)"), A.best.slice(), false, (r) => {
+      rows = (rows || []).concat([r]); Hp.saveRows(KEY, rows); renderRows();
+      status(`Eklendi: ${w3(r.w)} ayarı 30 sürüde puan ${r.score.toFixed(3)} aldı (düzen ${f2(r.order)}, güvenlik ${f2(r.safe)}, birlik ${f2(r.unity)}).`);
+    });
+  });
+  // measure the example rows only once the card is on screen
+  const card = $("au-h").closest(".card");
+  if ("IntersectionObserver" in window) new IntersectionObserver((es, ob) => { if (es.some((e) => e.isIntersecting)) { ob.disconnect(); ensureRows(); } }).observe(card);
+  else ensureRows();
+  // fallback for browsers that never report the card as visible
+  setTimeout(ensureRows, 6000);
+  chart();
+  window.addEventListener("resize", chart);
+  window.addEventListener("labview", (e) => { if (e.detail === "kuslar") setTimeout(chart, 50); });
+  const retheme = () => { Hp.readColors(); chart(); };
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", retheme);
   new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 })();
