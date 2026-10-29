@@ -429,6 +429,7 @@ select.sel {
           <div class="gr-card" data-fam="opt">
             <b>🐺 Hayvan adlı algoritmalara dikkat</b>
             <p>Gri kurt, ateş böceği, yarasa, balina gibi adlarla çıkan algoritmalar ayrıntılı incelendiğinde büyük ölçüde PSO'daki fikirlerin yeni adlarla tekrarı çıktı. 90'dan fazla araştırmacı bu konuda açık bir mektup yayımladı. Ders: bir algoritmayı adıyla ya da benzetmesiyle değil, ne yaptığıyla değerlendir.</p>
+            <button class="b" data-open="ar" style="justify-self:start">Kendin dene: Arena › Pisti kaydır</button>
             <p class="gr-src">Camacho-Villalón, Dorigo &amp; Stützle, <i>International Transactions in Operational Research</i> 30(6), 2023 · Aranha vd., “Metaphor-based metaheuristics, a call for action”, <i>Swarm Intelligence</i> 16, 2022</p>
           </div>
           <div class="gr-card" data-fam="rob">
@@ -1763,6 +1764,7 @@ select.sel {
             </select>
             <small>Her ölçüme rastgele hata eklenir. Yarışçılar gürültülü değere bakarak karar verir; tabloya ise bulduklarını sandıkları noktanın gerçek değeri yazılır.</small>
           </div>
+          <div class="ctrl"><label class="check" for="ar-shift"><input type="checkbox" id="ar-shift"><span>Pisti kaydır<br><small>En iyi nokta pistin ortasından rastgele bir yere taşınır. Pist aynı, sadece yeri değişti: iyi bir algoritmanın bundan etkilenmemesi gerekir.</small></span></label></div>
         </div>
         <div class="group">
           <div class="ctrl"><label for="ar-speed">Animasyon hızı<output id="o-ar-speed"></output></label><input type="range" id="ar-speed" min="0" max="9" step="1" value="3"></div>
@@ -1847,9 +1849,15 @@ select.sel {
           <dt>Tepe tırmanma</dt><dd>Yanına rastgele bir adım atar, daha iyiyse oraya geçer. Adım boyu pistin %10'undan %0.1'ine kadar küçülür.</dd>
           <dt>Benzetilmiş tavlama</dt><dd>Aynı adımlar; kötü adımı P = e<sup>−Δ/T</sup> olasılıkla kabul eder. Önce 10 rastgele ölçüm yapar, değerlerin yayılımının onda biri T₀ olur. T yakıt bittiğinde T₀'ın milyonda birine iner.</dd>
           <dt>PSO (gbest / halka)</dt><dd>PSO sekmesindeki dengeli ayarlar: w = 0.7, c1 = c2 = 1.5, Vmax = pistin %20'si. Burada 20 parçacık. Halkada herkes sadece iki komşusunu duyar.</dd>
+          <dt>Gri kurt (GWO)</dt><dd>2014'te yayımlanan, çok sık kullanılan “hayvan adlı” bir algoritma. 20 kurt; şimdiye kadarki en iyi üç nokta (alfa, beta, delta) sürüyü yönetir. Her kurt bu üçünün ortasına doğru gider; a katsayısı 2'den 0'a indikçe adımlar küçülür.</dd>
           <dt>Bakteri (BFO)</dt><dd>Bakteri sekmesindeki adım ayarları: C = pistin %4'ü, Ns = 4, Nc = 12, Ped = 0.25. Burada 20 bakteri ve 4 üreme turu. Kitaptaki gibi sabit adım.</dd>
         </dl>
         <p class="ref">Kaynak: rehberin 5. bölümü (adil karşılaştırmanın 5 kuralı ve “Optimizasyon Arenası” yarış planı). Fonksiyonlar Kennedy Böl. 8 ve Gazi &amp; Passino Böl. 12'deki test fonksiyonları; tavlama Kirkpatrick vd. (1983); BFO Gazi &amp; Passino Böl. 11.</p>
+        <h3>Aynı fikir, yeni ad: Gri kurt gerçekten yeni mi?</h3>
+        <p>Gri kurdun adımı da PSO gibi “iyi bulunan yerlere doğru, biraz rastgelelikle git” fikrine dayanıyor; kurtlar, alfa ve av hikâyesi bu fikrin yeni bir anlatımı. Peki neden test tablolarında çoğu zaman PSO'yu geçiyor gibi görünüyor? Formülde gizli bir eğilim var: liderin konumu doğrudan rastgele bir C sayısıyla çarpılıyor (C·X<sub>lider</sub>). Bir konumu bir sayıyla çarpmak onu 0 noktasına göre büyütmek ya da küçültmek demek; yani algoritma, farkında olmadan pistin merkezini özel bir nokta gibi görüyor. Klasik test fonksiyonlarının hepsinde en iyi nokta tam merkezde olduğu için bu eğilim avantaja dönüşüyor.</p>
+        <p>Bunu kendin dene: “Pisti kaydır” kutusunu işaretle. Pist aynı, sadece en iyi nokta merkezden başka bir yere taşınıyor. Adil bir algoritma bundan etkilenmemeli. Deneylerdeki “Gri kurt” satırlarına ve tablodaki kaydırılmış gruba bak.</p>
+        <p class="analogy">Ders: Bir algoritmanın adına, hikâyesine ya da tek bir tablodaki başarısına değil, ne yaptığına ve adil bir testte nasıl davrandığına bak.</p>
+        <p class="ref">Bu eğilimi gösteren çalışmalar: Niu, Niu &amp; Chang, “The defect of the Grey Wolf optimization algorithm and its verification method”, Knowledge-Based Systems, 2019; Camacho-Villalón, Dorigo &amp; Stützle, International Transactions in Operational Research 30(6), 2023. Gri kurt: Mirjalili, Mirjalili &amp; Lewis, Advances in Engineering Software 69, 2014.</p>
         <p class="ref">Dürüst not: Yarışçıların ayarlarını tek tek en iyi hâle getirmedim; her biri kendi sekmesindeki “dengeli” ayarla yarışıyor. Başka ayarla sıralama değişebilir. Kennedy de Böl. 8'de aynı uyarıyı yapar: bir algoritmayı ayarlamak, onu karşılaştırmanın bir parçasıdır.</p>
         <p class="ref">Rehberdeki 2. yarış planı (Boids, çekim–itme, foraging) yukarıdaki “Sürü hareket testi” bölümünde.</p>
       </article>
@@ -6062,14 +6070,21 @@ select.sel {
     rastrigin: { name: "Rastrigin", lo: -5.12, hi: 5.12, f: (x) => { let s = 10 * x.length; for (const v of x) s += v * v - 10 * Math.cos(TAU * v); return s; } },
     ackley: { name: "Ackley", lo: -5, hi: 5, f: (x) => { let a = 0, b = 0; for (const v of x) { a += v * v; b += Math.cos(TAU * v); } const n = x.length; return -20 * Math.exp(-0.2 * Math.sqrt(a / n)) - Math.exp(b / n) + Math.E + 20; } },
   };
-  const RACERS = ["random", "hill", "anneal", "gbest", "ring", "bfo"];
-  const RACER_NAME = { random: "Rastgele arama", hill: "Tepe tırmanma", anneal: "Benzetilmiş tavlama", gbest: "PSO (gbest)", ring: "PSO (halka)", bfo: "Bakteri (BFO)" };
+  const RACERS = ["random", "hill", "anneal", "gbest", "ring", "gwo", "bfo"];
+  const RACER_NAME = { random: "Rastgele arama", hill: "Tepe tırmanma", anneal: "Benzetilmiş tavlama", gbest: "PSO (gbest)", ring: "PSO (halka)", gwo: "Gri kurt (GWO)", bfo: "Bakteri (BFO)" };
+  const optOf = (track) => (track === "rosenbrock" ? 1 : 0);
+  // a shifted track moves the best point away from the centre; the shift depends only on the run's seed, so every racer gets the same one
+  function shiftFor(track, dim, seed) {
+    const T = TRACKS[track], r = mulberry32(seed + 4242), R = T.hi - T.lo;
+    return Array.from({ length: dim }, () => T.lo + 0.15 * R + r() * 0.7 * R - optOf(track));
+  }
   function gaussR(r) { let u = 0; while (u === 0) u = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(TAU * r()); }
 
   // one racer on one track; every function evaluation goes through ev(), which also adds the optional noise
   class Racer {
-    constructor(kind, track, dim, budget, noise, seed) {
+    constructor(kind, track, dim, budget, noise, seed, shifted) {
       this.kind = kind; this.T = TRACKS[track]; this.dim = dim; this.budget = budget; this.noise = noise;
+      this.shift = shifted ? shiftFor(track, dim, seed) : null;
       this.r = mulberry32(seed); this.n = 0;
       this.best = Infinity; this.bestX = null; this.trueBest = Infinity; this.reachAt = -1;
       this.cnt = { acc: 0, rej: 0, worse: 0, gUp: 0, pUp: 0, tumble: 0, swim: 0, repro: 0, elim: 0, newBest: 0 };
@@ -6080,7 +6095,7 @@ select.sel {
     rnd() { return Array.from({ length: this.dim }, () => this.T.lo + this.r() * this.range); }
     clamp(x) { return x.map((v) => Math.max(this.T.lo, Math.min(this.T.hi, v))); }
     ev(x) {
-      const t = this.T.f(x), y = this.noise ? t + this.noise * gaussR(this.r) : t;
+      const t = this.T.f(this.shift ? x.map((v, d) => v - this.shift[d]) : x), y = this.noise ? t + this.noise * gaussR(this.r) : t;
       this.n++; this.pts.push(x);
       if (y < this.best) { this.best = y; this.bestX = x.slice(); this.trueBest = t; this.cnt.newBest++; }
       if (this.reachAt < 0 && this.trueBest < AR_SUCCESS) this.reachAt = this.n;
@@ -6158,6 +6173,38 @@ select.sel {
         if (PF[gIdx()] < PF[g]) this.cnt.gUp++;
       }
     }
+    // grey wolf optimizer as published (Mirjalili et al., 2014): the 3 best wolves lead, a falls from 2 to 0
+    *gwo() {
+      const N = 20, D = this.dim, X = [], lead = [];
+      // keep the 3 best positions ever seen: alpha, beta, delta
+      const learn = (x, f) => {
+        const k = lead.findIndex((w) => f < w.f);
+        if (k === 0) this.cnt.gUp++;
+        if (k >= 0) lead.splice(k, 0, { x: x.slice(), f }); else if (lead.length < 3) lead.push({ x: x.slice(), f });
+        lead.length = Math.min(lead.length, 3);
+      };
+      this.phase = "ölçüm";
+      for (let i = 0; i < N; i++) { X.push(this.rnd()); learn(X[i], this.ev(X[i])); this.cur = X; yield; }
+      const iters = Math.max(1, Math.floor(this.budget / N) - 1);
+      for (let t = 0; ; t++) {
+        const L3 = lead.map((w) => w.x);
+        this.aCoef = 2 * Math.max(0, 1 - t / iters);
+        for (let i = 0; i < N; i++) {
+          const nx = new Array(D);
+          for (let d = 0; d < D; d++) {
+            let sum = 0;
+            for (const Lw of L3) {
+              const A = 2 * this.aCoef * this.r() - this.aCoef, Cc = 2 * this.r();
+              sum += Lw[d] - A * Math.abs(Cc * Lw[d] - X[i][d]);
+            }
+            nx[d] = sum / 3;
+          }
+          X[i] = this.clamp(nx);
+          const f = this.ev(X[i]); if (lead.length < 3 || f < lead[2].f) this.cnt.pUp++;
+          learn(X[i], f); this.cur = X; yield;
+        }
+      }
+    }
     // Passino's BFO with the bacteria tab's step settings (C = 4% of the track, Ns = 4, Nc = 12, Ped = 0.25); S = 20, Nre = 4
     *bfo() {
       const S = 20, C = 0.04 * this.range, Ns = 4, Nc = 12, Nre = 4, Ped = 0.25, D = this.dim;
@@ -6196,10 +6243,10 @@ select.sel {
     return { mean: m, std: sd, median: sorted[vals.length >> 1], success: ok.length, reach: ok.length ? ok.reduce((a, b) => a + b, 0) / ok.length : NaN };
   }
   // the same 30 seeds for every racer and track
-  function runArena30(kind, track, dim, budget, noise) {
+  function runArena30(kind, track, dim, budget, noise, shifted) {
     const vals = [], reach = [];
     for (let k = 0; k < AR_RUNS; k++) {
-      const R = new Racer(kind, track, dim, budget, noise, 7000 + k);
+      const R = new Racer(kind, track, dim, budget, noise, 7000 + k, shifted);
       R.runTo(budget); vals.push(R.trueBest); reach.push(R.reachAt);
     }
     return arStats(vals, reach);
@@ -6209,15 +6256,15 @@ select.sel {
   const TICKS = 50;
   const S = {
     cv: $("ar-sim"), chart: $("ar-chart"), calc: $("ar-calc"),
-    ui: { track: $("ar-track"), dim: $("ar-dim"), budget: $("ar-budget"), noise: $("ar-noise"), speed: $("ar-speed"), guided: $("ar-guided") },
+    ui: { track: $("ar-track"), dim: $("ar-dim"), budget: $("ar-budget"), noise: $("ar-noise"), shift: $("ar-shift"), speed: $("ar-speed"), guided: $("ar-guided") },
     W: 900, H: 540, dpr: 1, racers: [], tick: 0, sel: 3, heat: null, heatKey: "", calcKey: "", lastTick: -1,
   };
   S.ctx = S.cv.getContext("2d");
   const fmt = Hp.fmt, nf = (v) => String(+v.toFixed(2)).replace("-", "−");
-  const setting = () => ({ track: S.ui.track.value, dim: +S.ui.dim.value, budget: +S.ui.budget.value, noise: +S.ui.noise.value });
+  const setting = () => ({ track: S.ui.track.value, dim: +S.ui.dim.value, budget: +S.ui.budget.value, noise: +S.ui.noise.value, shift: S.ui.shift.checked });
   let dark = false;
   function readTheme() { const h = C.sky.replace("#", ""); dark = parseInt(h.slice(0, 2), 16) < 90; }
-  const HUE = { random: 0, hill: 150, anneal: 280, gbest: 25, ring: 215, bfo: 345 };
+  const HUE = { random: 0, hill: 150, anneal: 280, gbest: 25, ring: 215, gwo: 50, bfo: 345 };
   const rc = (k, a) => (k === "random" ? C.muted : `hsla(${HUE[k]}, ${dark ? 72 : 65}%, ${dark ? 64 : 45}%, ${a === undefined ? 1 : a})`);
   function outputs() { $("o-ar-speed").textContent = Hp.speedText(S.ui.speed); }
   function legend() {
@@ -6226,7 +6273,7 @@ select.sel {
   function restart() {
     const st = setting(), seed = (Math.random() * 1e9) | 0;
     S.racers = RACERS.map((k) => {
-      const R = new Racer(k, st.track, st.dim, st.budget, st.noise, seed);
+      const R = new Racer(k, st.track, st.dim, st.budget, st.noise, seed, st.shift);
       R.ticks = []; R.prevBest = Infinity; R.prevX = null; R.rank = 0; R.prevRank = 0; R.snap = null;
       return R;
     });
@@ -6252,7 +6299,7 @@ select.sel {
   }
   function measureCanvas() {
     const box = S.cv.parentElement.getBoundingClientRect(), W = Math.max(280, Math.round(box.width));
-    const cols = W >= 620 ? 3 : 2, rows = 6 / cols, gap = 10, pw = (W - gap * (cols + 1)) / cols, ph = Math.min(pw, 260) * 0.86 + 24;
+    const cols = W >= 620 ? 3 : 2, rows = Math.ceil(RACERS.length / cols), gap = 10, pw = (W - gap * (cols + 1)) / cols, ph = Math.min(pw, 260) * 0.86 + 24;
     const H = Math.round(rows * ph + gap * (rows + 1)), dpr = Math.min(2, window.devicePixelRatio || 1);
     S.cv.width = Math.round(W * dpr); S.cv.height = Math.round(H * dpr); S.cv.style.height = H + "px";
     Object.assign(S, { W, H, dpr, cols, gap, pw, ph }); S.heatKey = ""; readTheme();
@@ -6263,10 +6310,10 @@ select.sel {
     return { x, y, w: S.pw, h: S.ph, mx: x + (S.pw - size) / 2, my: y + 24, size };
   }
   // 2D slice of the track; extra dimensions sit at the optimum
-  const optOf = (track) => (track === "rosenbrock" ? 1 : 0);
-  function sliceF(x, y) { const T = TRACKS[S.st.track], q = new Array(S.st.dim).fill(optOf(S.st.track)); q[0] = x; q[1] = y; return T.f(q); }
+  const bestAt = () => { const sh = S.racers[0] && S.racers[0].shift; return Array.from({ length: S.st.dim }, (_, d) => optOf(S.st.track) + (sh ? sh[d] : 0)); };
+  function sliceF(x, y) { const T = TRACKS[S.st.track], b = bestAt(), sh = S.racers[0].shift, q = b.slice(); q[0] = x; q[1] = y; return T.f(sh ? q.map((v, d) => v - sh[d]) : q); }
   function buildHeat(size) {
-    const key = S.st.track + ":" + S.st.dim + ":" + Math.round(size) + ":" + C["heat-hi"];
+    const key = S.st.track + ":" + S.st.dim + ":" + Math.round(size) + ":" + C["heat-hi"] + ":" + bestAt().slice(0, 2).join(",");
     if (key === S.heatKey) return; S.heatKey = key;
     const T = TRACKS[S.st.track], n = Math.max(60, Math.round(size / 2)), vals = new Float32Array(n * n);
     let lo = Infinity, hi = -Infinity;
@@ -6299,7 +6346,7 @@ select.sel {
       ctx.fillStyle = C.ink; ctx.globalAlpha = 0.45;
       for (let n = 0; n < k; n += step) { const q = to(pts[n]); ctx.fillRect(q[0] - 1.2, q[1] - 1.2, 2.4, 2.4); }
       ctx.globalAlpha = 1;
-      const o = to([optOf(S.st.track), optOf(S.st.track)]);
+      const o = to(bestAt());
       ctx.strokeStyle = C.ink; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(o[0] - 5, o[1] - 5); ctx.lineTo(o[0] + 5, o[1] + 5); ctx.moveTo(o[0] + 5, o[1] - 5); ctx.lineTo(o[0] - 5, o[1] + 5); ctx.stroke();
       if (R.kind !== "random") (R.curNow || []).forEach((q) => { const p = to(q); ctx.beginPath(); ctx.arc(p[0], p[1], R.curNow.length > 1 ? 3.2 : 5, 0, TAU); ctx.fillStyle = rc(R.kind); ctx.fill(); ctx.strokeStyle = C.ink; ctx.lineWidth = 1; ctx.stroke(); });
       const showNew = !L1 || ph.u >= 0.35, bx = showNew ? R.bestX : R.prevX;
@@ -6349,6 +6396,7 @@ select.sel {
     anneal: "x′ = x + σ·z; daha iyiyse git, kötüyse P = e^(−Δ/T) olasılıkla git. T ve σ zamanla küçülür.",
     gbest: "v ← w·v + c1·r1·(pbest − x) + c2·r2·(gbest − x); x ← x + v. Herkes sürünün en iyisini duyar.",
     ring: "Aynı formül, ama gbest yerine sadece iki komşunun en iyisi.",
+    gwo: "En iyi 3 nokta (alfa, beta, delta) lider. Her kurt: X ← ortalama(Xₗ − A·|C·Xₗ − X|), A ve C rastgele; a katsayısı 2'den 0'a iner.",
     bfo: "Takla at (rastgele yön), iyileşiyorsa yüz; ara ara üre, ara ara ışınlan.",
   };
   function calc() {
@@ -6367,6 +6415,7 @@ select.sel {
       else if (R.kind === "anneal") s0 += (R.T0 ? `<p class="num">T₀ = ${fmt(R.T0)} (ilk 10 rastgele ölçümün yayılımının onda biri) · şimdi T = ${fmt(R.temp)}, σ = ${fmt(R.sigma)}</p>` : "<p>İlk 10 ölçüm rastgele: sıcaklığın ölçeğini bulmak için.</p>") +
         `<p class="num">${d("acc")} adım kabul, bunların <b>${d("worse")}</b> tanesi kötü adımdı (zar P'den küçük geldi) · ${d("rej")} ret.</p>`;
       else if (R.kind === "bfo") s0 += `<p class="num">${d("tumble")} takla, ${d("swim")} yüzme adımı, ${d("repro")} üreme, ${d("elim")} ışınlanma. Şu anki döngü: <b>${R.phase}</b>.</p>`;
+      else if (R.kind === "gwo") s0 += `<p class="num">20 kurt × ${nf(spent / 20)} tur · a = ${R.aCoef === undefined ? "2" : num(R.aCoef)} · ${d("pUp")} ölçüm ilk üçe girdi, ${d("gUp")} kez alfa (en iyi nokta) değişti.</p>` + (R.shift ? "<p>Pist kaydırılmış: en iyi nokta merkezde değil.</p>" : "");
       else s0 += `<p class="num">20 parçacık × ${nf(spent / 20)} sürü turu · ${d("pUp")} kez bir parçacık kendi en iyisini (pbest) geliştirdi, ${d("gUp")} turda ${R.kind === "gbest" ? "sürünün en iyisi (gbest)" : "sürünün en iyisi"} değişti.</p>`;
       const xs = (x) => (x ? "(" + x.slice(0, 3).map((v) => num(v)).join(", ") + (x.length > 3 ? ", …" : "") + ")" : "–");
       const improved = R.trueBest < sn.best || (!isFinite(R.prevBest) && isFinite(R.trueBest));
@@ -6408,13 +6457,13 @@ select.sel {
   requestAnimationFrame(loop);
 
   const fresh = () => { restart(); S.run.set(!reduceMotion); markActive(); render(); };
-  ["track", "dim", "budget", "noise"].forEach((k) => S.ui[k].addEventListener("change", fresh));
+  ["track", "dim", "budget", "noise", "shift"].forEach((k) => S.ui[k].addEventListener("change", fresh));
   S.ui.speed.addEventListener("input", outputs);
   S.ui.guided.addEventListener("change", () => { S.calcKey = ""; render(); });
   $("ar-reset").addEventListener("click", fresh);
   S.cv.addEventListener("pointerdown", (ev) => {
     const r = S.cv.getBoundingClientRect(), px = (ev.clientX - r.left) * (S.W / r.width), py = (ev.clientY - r.top) * (S.H / r.height);
-    for (let i = 0; i < 6; i++) { const P = panel(i); if (px >= P.x && px <= P.x + P.w && py >= P.y && py <= P.y + P.h) { S.sel = i; S.calcKey = ""; S.lastTick = -1; render(); return; } }
+    for (let i = 0; i < RACERS.length; i++) { const P = panel(i); if (px >= P.x && px <= P.x + P.w && py >= P.y && py <= P.y + P.h) { S.sel = i; S.calcKey = ""; S.lastTick = -1; render(); return; } }
   });
   if (!S.run.playing) S.run.u = 1;
 
@@ -6428,22 +6477,24 @@ select.sel {
     { id: "ras10", name: "Gerçek test: Rastrigin, 10 boyut", track: "rastrigin", dim: 10, budget: 3000, noise: 0, expect: "Kimse hedefe inemiyor. Fark ortalamada: gbest 11, halka 14, tavlama 40, tepe tırmanma 42, BFO 52, rastgele 77." },
     { id: "ros10", name: "Rosenbrock, 10 boyut", track: "rosenbrock", dim: 10, budget: 3000, noise: 0, expect: "Kimse hedefe inemiyor; tepe tırmanma, tavlama ve iki PSO 6–8 civarında birbirine yakın. Rastgele arama 258." },
     { id: "ack10", name: "Ackley, 10 boyut", track: "ackley", dim: 10, budget: 3000, noise: 0, expect: "Sürünün paylaşımı burada fark yaratıyor: gbest 29 / 30, halka 12 / 30, diğerleri 0 / 30." },
+    { id: "kurt0", name: "Gri kurt, en iyi nokta ortada: Ackley, 10 boyut", track: "ackley", dim: 10, budget: 3000, noise: 0, expect: "Gri kurt 30 / 30 ile hedefe iniyor (ortalama 7e-9); gbest 29 / 30, diğerleri 0. Bu tabloya bakan biri gri kurdun en iyi yöntem olduğunu düşünür. Şimdi bir alttaki deneyi aç." },
+    { id: "kurt1", name: "Gri kurt, pist kaydırılmış: Ackley, 10 boyut", track: "ackley", dim: 10, budget: 3000, noise: 0, shift: true, expect: "Aynı pist, sadece en iyi nokta merkezden kaydı. Gri kurt 0 / 30'a düşüyor (ortalama 1.05); gbest 27 / 30 ile neredeyse hiç etkilenmiyor. Sphere'de de gri kurdun sonucu 1e-16'dan 0.32'ye kötüleşiyor, PSO'nunki değişmiyor." },
     { id: "az", name: "Az yakıt: Rastrigin, 2 boyut, 300 ölçüm", track: "rastrigin", dim: 2, budget: 300, noise: 0, expect: "Sürünün toplanmaya vakti yok: gbest 0 / 30, halka 1 / 30. Hızlı inen tavlama 5, tepe tırmanma 2 / 30. Kısa yarışı başka, uzun yarışı başka yöntem kazanır." },
     { id: "gurultu", name: "Gürültülü ölçüm: Sphere, 2 boyut, ± 1", track: "sphere", dim: 2, budget: 3000, noise: 1, expect: "Kolay pist bile zorlaşıyor. İki PSO 10 / 30 ile en iyisi; tepe tırmanma ve BFO 6, rastgele 4, tavlama 2 / 30. Rehberdeki “BFO gürültüye dayanıklı olabilir” tahmini bu ayarda tutmadı." },
   ];
-  const setText = (e) => `${TRACKS[e.track].name} · ${e.dim} boyut · ${e.budget} ölçüm${e.noise ? " · gürültü ± " + e.noise : ""}`;
+  const setText = (e) => `${TRACKS[e.track].name} · ${e.dim} boyut · ${e.budget} ölçüm${e.noise ? " · gürültü ± " + e.noise : ""}${e.shift ? " · pist kaydırılmış" : ""}`;
   const expBox = $("ar-exps");
   EXPS.forEach((e) => {
     const row = document.createElement("div"); row.className = "exp"; row.dataset.id = e.id;
     row.innerHTML = `<div><b>${e.name}</b><span>${e.expect}</span><br><code>${setText(e)}</code></div>`;
     const b = document.createElement("button"); b.className = "b"; b.textContent = "Dene";
     b.addEventListener("click", () => {
-      S.ui.track.value = e.track; S.ui.dim.value = e.dim; S.ui.budget.value = e.budget; S.ui.noise.value = e.noise;
+      S.ui.track.value = e.track; S.ui.dim.value = e.dim; S.ui.budget.value = e.budget; S.ui.noise.value = e.noise; S.ui.shift.checked = !!e.shift;
       fresh(); status(`“${e.name}” yüklendi. İzle, sonra “30'ar kez koştur” ile ölç.`);
     });
     row.appendChild(b); expBox.appendChild(row);
   });
-  const same = (e, c) => e.track === c.track && e.dim === c.dim && e.budget === c.budget && e.noise === c.noise;
+  const same = (e, c) => e.track === c.track && e.dim === c.dim && e.budget === c.budget && e.noise === c.noise && !!e.shift === c.shift;
   function markActive() {
     const c = setting();
     expBox.querySelectorAll(".exp").forEach((row) => { row.dataset.active = String(same(EXPS.find((x) => x.id === row.dataset.id), c)); });
@@ -6451,16 +6502,16 @@ select.sel {
   markActive();
 
   // ---------- arena table: one group = one (dimension, fuel, noise), 6 racers × 4 tracks ----------
-  const KEY = "suru-lab-arena-rows-v1", TRK = ["sphere", "rosenbrock", "rastrigin", "ackley"];
+  const KEY = "suru-lab-arena-rows-v2", TRK = ["sphere", "rosenbrock", "rastrigin", "ackley"];
   const status = (t) => { $("ar-status").textContent = t; };
-  const groupName = (g) => `${g.dim} boyut · ${g.budget} ölçüm${g.noise ? " · ± " + g.noise : ""}${g.example ? "" : " (benim)"}`;
+  const groupName = (g) => `${g.dim} boyut · ${g.budget} ölçüm${g.noise ? " · ± " + g.noise : ""}${g.shift ? " · kaydırılmış pist" : ""}${g.example ? "" : " (benim)"}`;
   let groups = Hp.loadRows(KEY), busyRun = false;
   // measure a group one (racer, track) cell at a time so the page stays responsive
   function measureGroup(g, done) {
     const jobs = []; RACERS.forEach((k) => TRK.forEach((t) => jobs.push([k, t])));
     g.cells = {}; let i = 0; busyRun = true;
     const tick = () => {
-      const [k, t] = jobs[i++]; (g.cells[k] = g.cells[k] || {})[t] = runArena30(k, t, g.dim, g.budget, g.noise);
+      const [k, t] = jobs[i++]; (g.cells[k] = g.cells[k] || {})[t] = runArena30(k, t, g.dim, g.budget, g.noise, !!g.shift);
       status(`Ölçülüyor: ${groupName(g)} · ${i} / ${jobs.length}`);
       if (i < jobs.length) setTimeout(tick, 0); else { busyRun = false; done(); }
     };
@@ -6480,18 +6531,18 @@ select.sel {
     });
   }
   function exampleGroups(done) {
-    groups = [{ dim: 2, budget: 3000, noise: 0, example: true }, { dim: 10, budget: 3000, noise: 0, example: true }];
-    measureGroup(groups[0], () => measureGroup(groups[1], () => { Hp.saveRows(KEY, groups); renderRows(); done && done(); }));
+    groups = [{ dim: 2, budget: 3000, noise: 0, example: true }, { dim: 10, budget: 3000, noise: 0, example: true }, { dim: 10, budget: 3000, noise: 0, shift: true, example: true }];
+    measureGroup(groups[0], () => measureGroup(groups[1], () => measureGroup(groups[2], () => { Hp.saveRows(KEY, groups); renderRows(); done && done(); })));
   }
   let started = false;
   function ensureRows() {
     if (started) return; started = true;
     if (groups) { renderRows(); return; }
-    exampleGroups(() => status("Örnek tablo hazır: 2 ve 10 boyut, 3000 ölçüm, 30'ar koşu."));
+    exampleGroups(() => status("Örnek tablo hazır: 2 ve 10 boyut, bir de kaydırılmış pistte 10 boyut; 3000 ölçüm, 30'ar koşu."));
   }
   $("ar-run30").addEventListener("click", () => {
     if (busyRun) return;
-    const c = setting(), g = { dim: c.dim, budget: c.budget, noise: c.noise, example: false };
+    const c = setting(), g = { dim: c.dim, budget: c.budget, noise: c.noise, shift: c.shift, example: false };
     measureGroup(g, () => {
       groups = (groups || []).concat([g]); Hp.saveRows(KEY, groups); renderRows();
       const win = TRK.map((t) => RACERS.slice().sort((a, b) => g.cells[a][t].mean - g.cells[b][t].mean)[0]);
@@ -6903,7 +6954,7 @@ select.sel {
       { name: "Bakteri (BFO)", one: "Takla at, işler iyiye gidiyorsa aynı yönde yüz. İyi olanlar çoğalır, bazıları başka yere savrulur.", like: "Karanlık odada yemek kokusuna doğru yürümek.", tab: "kb" },
       { name: "Yapay arı kolonisi (ABC)", one: "Kaşif arılar yeni yerler dener, işçi arılar iyi kaynakları daha sık ziyaret eder.", like: "Mahallede en iyi fırını bulan arkadaşın herkese tarif etmesi." },
       { name: "Ateş böceği", one: "Her böcek kendinden daha parlak (daha iyi) olana doğru uçar; parlaklık uzaklaştıkça azalır.", like: "Karanlıkta en parlak ışığa doğru yürümek." },
-      { name: "Hayvan adlı diğerleri", one: "Son yıllarda kurt, balina, yarasa adlı çok sayıda algoritma çıktı. İncelenenlerin çoğu PSO fikirlerinin yeni adla tekrarı çıktı (7. bölüm). Önce PSO ve karıncayı iyi öğren.", like: "Aynı yemeğin farklı adlarla satılması." },
+      { name: "Gri kurt ve hayvan adlı diğerleri", one: "Son yıllarda kurt, balina, yarasa adlı çok sayıda algoritma çıktı. İncelenenlerin çoğu PSO fikirlerinin yeni adla tekrarı çıktı. Gri kurt Arena'da yarışıyor: en iyi nokta ortadayken parlıyor, pist kayınca geride kalıyor.", like: "Aynı yemeğin farklı adlarla satılması.", tab: "ar" },
     ],
     rob: [
       { name: "Toplanma", one: "Her robot gördüğü komşuların ortasına yürür; sürü bir ya da birkaç noktada toplanır.", like: "Bu sayfadaki gösteri.", tab: "gr-demo" },
