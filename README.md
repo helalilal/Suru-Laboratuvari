@@ -9,7 +9,7 @@ Kuş sürüleri, parçacık sürüsü (PSO), karıncalar, bakteriler, robot sür
 - **Deneyler:** Tek tıkla bir ayarı boz, ne olduğunu gör.
 - **Adil karşılaştırma:** Her ayar aynı 30 başlangıçla çalıştırılır, sonuç tabloya yazılır.
 
-👉 **Siteyi aç:** SITE_URL
+👉 **Siteyi aç:** https://helalilal.github.io/Suru-Laboratuvari/
 
 ## Sekmeler
 
