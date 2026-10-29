@@ -423,6 +423,7 @@ select.sel {
           <div class="gr-card" data-fam="rob">
             <b>🔋 Sahaya çıkmanın önündeki engeller</b>
             <p>Pil süresi kısa; robotların birbirinin yerini bilmesi (konumlama) zor; simülasyonda çalışan kural gerçek robotta aynı çalışmıyor. Sanayide bütün bir sürü algoritması yerine genellikle sadece parçaları (toplanma, formasyon gibi “temel davranışlar”) kullanılıyor.</p>
+            <button class="b" data-open="robot" style="justify-self:start">Kendin dene: Robot sürüsü › Gerçek dünya</button>
             <p class="gr-src">Schranz vd., “Swarm robotic behaviors and current applications”, <i>Frontiers in Robotics and AI</i> 7, 2020</p>
           </div>
           <div class="gr-card" data-fam="opt">
@@ -580,7 +581,6 @@ select.sel {
       </ul>
       <p>Üç isteğin her biri kaydırıcıdaki ağırlıkla çarpılıp toplanır, kuşun hızı bu toplam kadar değişir ve kuş bir adım ilerler. <b>Adım adım</b> düğmesiyle seçili kuşun üç okunu tek tek inceleyebilirsin.</p>
       <p class="ref">Kitapta: Kennedy &amp; Eberhart, <i>Swarm Intelligence</i>, Böl. 3, "Staying Together but Not Colliding", s. 109–115 (PDF ≈ s. 138–144). Bu kuralların kanıtlı hâli: Gazi &amp; Passino, Böl. 2.1 ve 3.2.</p>
-        <p class="ref">Güncel: Bu kuralları elle yazmak yerine öğretmek de mümkün. Tolstaya vd., “Learning decentralized controllers for robot swarms with graph neural networks”, CoRL, PMLR 100, 2020: her robot sadece komşularıyla konuşan küçük bir sinir ağıyla merkezi bir sürü denetleyicisini taklit etmeyi öğreniyor.</p>
     </article>
 
     <article class="card">
@@ -903,7 +903,6 @@ select.sel {
         </ol>
         <p>Seçili parçacıkta üç ok uç uca çizilir: gri, mavi ve turuncu okların toplamı parçacığı kesikli daireden yeni yerine taşır. <b>Adım adım</b> ile bunu tur tur izleyebilirsin.</p>
         <p class="ref">Kitapta: Kennedy &amp; Eberhart Böl. 7, s. 287–314 (PDF ≈ 316–343); pseudocode s. 313 (PDF ≈ 342). Patlama, constriction ve topoloji: Böl. 8, s. 328–359 (PDF ≈ 357–388). Mühendislik bakışı: Gazi &amp; Passino Böl. 12.1–12.3, s. 251–270 (PDF ≈ 263–282).</p>
-        <p class="ref">Güncel: Gri kurt, ateş böceği, yarasa gibi “yeni” algoritmaların büyük ölçüde PSO fikirlerinin tekrarı olduğunu gösteren çalışma: Camacho-Villalón, Dorigo &amp; Stützle, <i>International Transactions in Operational Research</i> 30(6), 2023.</p>
         <p class="ref">Kuşlar sekmesiyle bağı: PSO, Kennedy'nin kuş sürüsü simülasyonundan doğdu. Kuşlar komşularının yönüne bakıyordu; parçacıklar komşularının bulduğu en iyi yere bakıyor.</p>
       </article>
 
@@ -1287,6 +1286,25 @@ select.sel {
           <p class="eq" id="rb-derived" style="white-space:normal"></p>
         </div>
         <div class="group">
+          <span class="eyebrow">Gerçek dünya</span>
+          <small class="muted">Kitaptaki kanıt her robotun bütün robotları, kusursuz ölçerek gördüğünü varsayıyor. Gerçek robotlarda bu böyle değil.</small>
+          <div class="ctrl">
+            <label for="rb-sr">Görüş menzili<output id="o-rb-sr"></output></label>
+            <input type="range" id="rb-sr" min="5" max="65" step="1" value="65">
+            <small>Robot sadece bu mesafedeki robotları görür; uzaktakileri hiç hesaba katmaz. En sağ: herkes herkesi görür.</small>
+          </div>
+          <div class="ctrl">
+            <label for="rb-noise">Sensör gürültüsü<output id="o-rb-noise"></output></label>
+            <input type="range" id="rb-noise" min="0" max="2" step="0.1" value="0">
+            <small>Her turda her komşunun yeri bu kadar hatayla ölçülür.</small>
+          </div>
+          <div class="ctrl">
+            <label for="rb-fail">Arızalı robot<output id="o-rb-fail"></output></label>
+            <input type="range" id="rb-fail" min="0" max="5" step="1" value="0">
+            <small>Arızalı robot yerinde durur, hareket etmez; diğerleri onu görmeye devam eder.</small>
+          </div>
+        </div>
+        <div class="group">
           <div class="ctrl">
             <label for="rb-env">Çevre (σ haritası)</label>
             <select class="sel" id="rb-env">
@@ -1336,7 +1354,6 @@ select.sel {
           <dt>σ</dt><dd>Çevre haritası. Düşük yer iyi (yiyecek), yüksek yer kötü (tehlike). −∇σ robotu yokuş aşağı, iyi yere iter.</dd>
         </dl>
         <p class="ref">Kitapta: Gazi &amp; Passino Böl. 2.1–2.2 (s. 15–18, PDF ≈ 27–30); kümelenme ve kanıt Böl. 3.2 (s. 30–46, PDF ≈ 42–58); sosyal yiyecek arama Böl. 3.3 (s. 46–64, PDF ≈ 58–76). Önerilen sıra: önce 3.2.5 simülasyon örnekleri (s. 44), sonra 3.2.1 fonksiyon tasarımı (s. 30).</p>
-        <p class="ref">Daha fazla oku: Brambilla, Ferrante, Birattari &amp; Dorigo, “Swarm robotics: a review from the swarm engineering perspective”, <i>Swarm Intelligence</i> 7(1), 2013 · Hamann, <i>Swarm Robotics: A Formal Approach</i>, Springer, 2018 (toplanma, sürü hâlinde uçuş, görev paylaşımı için kısa bir ders kitabı).</p>
         <p class="ref">Diğer sekmelerle bağı: Kuşlar sekmesindeki “ayrıl + birleş” kurallarının kanıtlı hâli. Çevre açıkken bu, Parçacıklar sekmesindeki PSO'nun gerçek robotlarla yapılmış hâli: iyi bölgeye çekil, ama gruptan kopma.</p>
       </article>
       <article class="card">
@@ -1359,7 +1376,7 @@ select.sel {
         </div>
         <div class="tablewrap">
           <table>
-            <thead><tr><th>#</th><th>Ayar</th><th>N</th><th>a</th><th>b</th><th>c</th><th>δ (m)</th><th>ε kitap (m)</th><th>Ölçülen yarıçap (m)</th><th>Son en yakın (m)</th><th>Durulma (tur)</th><th>Sınır tuttu</th></tr></thead>
+            <thead><tr><th>#</th><th>Ayar</th><th>N</th><th>a</th><th>b</th><th>c</th><th>Görüş</th><th>Gürültü</th><th>Arıza</th><th>δ (m)</th><th>ε kitap (m)</th><th>Ölçülen yarıçap (m)</th><th>Son en yakın (m)</th><th>Durulma (tur)</th><th>Sınır tuttu</th><th>Kopuk parça</th></tr></thead>
             <tbody id="rb-rows"></tbody>
           </table>
         </div>
@@ -1482,7 +1499,6 @@ select.sel {
           <dt>Bağlantılı</dt><dd>Ağda her drone'dan her drone'a bir yol varsa herkes aynı sayıda buluşur. Kopuk parçalar ayrı ayrı anlaşır.</dd>
         </dl>
         <p class="ref">Kitapta: Gazi &amp; Passino Böl. 2.4 (s. 20–22, PDF ≈ 32–34), Böl. 9 “Asynchronous Distributed Agreement” (s. 197–213, PDF ≈ 209–225). Önce 9.1 model (s. 197) ve 9.4 simülasyonlar (s. 208), sonra 9.2–9.3 kanıtlar.</p>
-        <p class="ref">Daha fazla oku: Olfati-Saber, Fax &amp; Murray, “Consensus and cooperation in networked multi-agent systems”, <i>Proceedings of the IEEE</i> 95(1), 2007. Bu sekmedeki anlaşma kuralının kontrol teorisi açısından klasik anlatımı: gecikme, kopan bağlantılar ve yakınsama hızı.</p>
         <p class="ref">Diğer sekmelerle bağı: Kuşlar sekmesindeki “hizalan” kuralı aslında yön üzerinde bir anlaşma. Görev pazarı sekmesinde drone'lar bir sayı değil, “kim hangi işi yapacak” kararı üzerinde anlaşacak.</p>
       </article>
       <article class="card">
@@ -1633,7 +1649,6 @@ select.sel {
           <dt>Kalp atışı</dt><dd>Komşusundan sinyal gelmeyen drone onu “düştü” sayar, onun görevlerini boşa çıkarır ve bu haberi de dedikoduyla yayar.</dd>
         </dl>
         <p class="ref">Kaynak: Eser &amp; Yılmaz, “A Gossip-Based Auction Algorithm for Decentralized Task Rescheduling in Heterogeneous Drone Swarms”, IEEE TAES 61(3), 2025. Okuma sırası: Bölüm III-D (mutabakat problemi), IV-B “Task Assignment Module” (Algoritma 3, denklem 20 ve 24–27), Tablo V (dedikodu kuralları), sonra V. bölüm sonuçları.</p>
-        <p class="ref">Daha fazla oku: Choi, Brunet &amp; How, “Consensus-based decentralized auctions for robust task allocation”, <i>IEEE Transactions on Robotics</i> 25(4), 2009. Açık artırma ile anlaşmayı birleştiren klasik yöntem (CBBA); belli varsayımlar altında çakışmasız bir plana ulaşıldığını kanıtlıyor.</p>
         <p class="ref">Sadeleştirmeler: zaman pencereleri, drone tipleri, ön-artırma teklifindeki “maxTaskInc” değeri ve şifreli kimlik doğrulama burada yok. Sinerji turu makaledekinden basit. Drone'lar planlama boyunca yerinde duruyor.</p>
         <p class="ref">Diğer sekmelerle bağı: Anlaşma sekmesinde drone'lar bir sayının ortalamasında buluşuyordu. Burada her görev için “en düşük teklif” üzerinde buluşuyorlar (min-mutabakat). Ağ kopuksa orada da burada da anlaşma olmuyor.</p>
       </article>
@@ -4107,6 +4122,9 @@ select.sel {
   const TAU = Math.PI * 2, DT = 0.01, MAX = 200, WORLD = [100, 62], MAXMOVE = 8, AS = 3;
 
   const deltaOf = (p) => (p.b > p.a ? Math.sqrt(p.c * Math.log(p.b / p.a)) : 0);
+  // real-world mode: sensing range (FULL_SR = sees everyone), sensor noise, failed robots
+  const FULL_SR = 65, sensed = (p) => p.sr !== undefined && p.sr < FULL_SR;
+  function gauss(r) { let u = 0; while (u === 0) u = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * r()); }
   const epsOf = (p) => (p.b > p.a ? (p.b / p.a) * Math.sqrt(p.c / 2) * Math.exp(-0.5) : 0);
 
   // ---------- environment σ(x): low = good ----------
@@ -4136,6 +4154,9 @@ select.sel {
     constructor(p, envKind, seed) {
       this.p = Object.assign({}, p); this.envKind = envKind; this.env = makeEnv(envKind, p.k);
       this.rand = L.mulberry32(seed); const r = this.rand;
+      // a separate stream for sensor noise, so the ideal runs stay exactly as before
+      this.nr = L.mulberry32(seed + 7919);
+      this.dead = new Set(Array.from({ length: Math.min(p.fail || 0, p.n - 1) }, (_, k) => p.n - 1 - k));
       const x0 = envKind === "bowl" ? [8, 40] : [22, 56], y0 = [8, 54];
       this.x = []; for (let i = 0; i < p.n; i++) this.x.push([x0[0] + r() * (x0[1] - x0[0]), y0[0] + r() * (y0[1] - y0[0])]);
       this.prev = this.x.map((q) => q.slice()); this.trail = this.x.map(() => []);
@@ -4146,16 +4167,19 @@ select.sel {
     setEnv(kind, k) { this.envKind = kind; this.p.k = k; this.env = makeEnv(kind, k); }
     centroid() { let a = 0, b = 0; for (const q of this.x) { a += q[0]; b += q[1]; } return [a / this.x.length, b / this.x.length]; }
     forceOn(i, rec) {
-      const p = this.p, xi = this.x[i]; let fx = 0, fy = 0; const pairs = rec ? [] : null;
+      const p = this.p, xi = this.x[i]; let fx = 0, fy = 0, unseen = 0; const pairs = rec ? [] : null;
       for (let j = 0; j < this.x.length; j++) {
         if (j === i) continue;
-        const y0 = xi[0] - this.x[j][0], y1 = xi[1] - this.x[j][1], r2 = y0 * y0 + y1 * y1;
+        // robots beyond the sensing range are invisible; visible ones are measured with noise
+        if (sensed(p) && Math.hypot(xi[0] - this.x[j][0], xi[1] - this.x[j][1]) > p.sr) { unseen++; continue; }
+        const seen = p.noise ? [this.x[j][0] + p.noise * gauss(this.nr), this.x[j][1] + p.noise * gauss(this.nr)] : this.x[j];
+        const y0 = xi[0] - seen[0], y1 = xi[1] - seen[1], r2 = y0 * y0 + y1 * y1;
         const be = p.b * Math.exp(-r2 / p.c), k = p.a - be, g = [-k * y0, -k * y1];
         fx += g[0]; fy += g[1];
-        if (rec) pairs.push({ j, r: Math.sqrt(r2), be, k, g });
+        if (rec) pairs.push({ j, r: Math.sqrt(r2), be, k, g, seen });
       }
       const e = this.env(xi[0], xi[1]), fe = [-e.gx, -e.gy];
-      return { pair: [fx, fy], env: fe, v: [fx + fe[0], fy + fe[1]], pairs, s: e.s };
+      return { pair: [fx, fy], env: fe, v: [fx + fe[0], fy + fe[1]], pairs, s: e.s, unseen };
     }
     step() {
       const n = this.x.length;
@@ -4164,6 +4188,7 @@ select.sel {
       let selCapped = false;
       for (let i = 0; i < n; i++) {
         let dx = DT * F[i].v[0], dy = DT * F[i].v[1];
+        if (this.dead.has(i)) { dx = 0; dy = 0; }
         const m = Math.hypot(dx, dy);
         if (m > MAXMOVE) { dx *= MAXMOVE / m; dy *= MAXMOVE / m; if (i === this.sel) selCapped = true; }
         this.trail[i].push(this.x[i].slice()); if (this.trail[i].length > 12) this.trail[i].shift();
@@ -4182,35 +4207,44 @@ select.sel {
       this.c = c; this.rad = rad; this.minD = mn; this.drift = Math.hypot(c[0] - this.c0[0], c[1] - this.c0[1]); this.sAvg = sAvg / this.x.length;
       this.minEver = Math.min(this.minEver, mn);
       this.hist.rad.push(rad); this.hist.min.push(mn);
+      // pieces: groups that cannot see each other at all
+      this.parts = 1;
+      if (sensed(this.p)) {
+        const n = this.x.length, par = Array.from({ length: n }, (_, k) => k);
+        const f = (k) => { while (par[k] !== k) { par[k] = par[par[k]]; k = par[k]; } return k; };
+        for (let a = 0; a < n; a++) for (let b = a + 1; b < n; b++) if (Math.hypot(this.x[a][0] - this.x[b][0], this.x[a][1] - this.x[b][1]) <= this.p.sr) par[f(a)] = f(b);
+        this.parts = new Set(par.map((_, k) => f(k))).size;
+      }
     }
   }
   function runRobot30(p) {
-    const rads = [], settles = [], mins = []; let held = 0; const eps = epsOf(p);
+    const rads = [], settles = [], mins = [], parts = []; let held = 0; const eps = epsOf(p);
     for (let k = 0; k < L.RUNS; k++) {
       const s = new Swarm(p, "none", 1000 + k);
       for (let t = 0; t < MAX; t++) s.step();
-      const fin = s.rad; rads.push(fin); mins.push(s.minD);
+      const fin = s.rad; rads.push(fin); mins.push(s.minD); parts.push(s.parts);
       let st = s.hist.rad.length - 1;
       while (st > 0 && Math.abs(s.hist.rad[st - 1] - fin) <= 0.02 * Math.max(fin, 1e-6)) st--;
       settles.push(st);
       if (eps > 0 && fin <= eps) held++;
     }
     const m = (a) => a.reduce((x, y) => x + y, 0) / a.length;
-    return { rad: m(rads), min: m(mins), settle: m(settles), held: eps > 0 ? held / L.RUNS : null, delta: deltaOf(p), eps };
+    return { rad: m(rads), min: m(mins), settle: m(settles), held: eps > 0 ? held / L.RUNS : null, delta: deltaOf(p), eps, parts: m(parts) };
   }
 
   // ---------- DOM + drawing ----------
   const R = {
     cv: $("rb-sim"), chart: $("rb-chart"), calc: $("rb-calc"),
-    ui: { n: $("rb-n"), a: $("rb-a"), b: $("rb-b"), c: $("rb-c"), env: $("rb-env"), k: $("rb-k"), click: $("rb-click"), speed: $("rb-speed"), guided: $("rb-guided") },
+    ui: { n: $("rb-n"), a: $("rb-a"), b: $("rb-b"), c: $("rb-c"), sr: $("rb-sr"), noise: $("rb-noise"), fail: $("rb-fail"), env: $("rb-env"), k: $("rb-k"), click: $("rb-click"), speed: $("rb-speed"), guided: $("rb-guided") },
     W: 900, H: 540, dpr: 1, s: 1, ox: 0, oy: 0, heat: null, sim: null, lastIter: -1, calcKey: "",
   };
   R.ctx = R.cv.getContext("2d");
-  const params = () => ({ n: +R.ui.n.value, a: +R.ui.a.value, b: +R.ui.b.value, c: +R.ui.c.value, k: +R.ui.k.value });
+  const params = () => ({ n: +R.ui.n.value, a: +R.ui.a.value, b: +R.ui.b.value, c: +R.ui.c.value, k: +R.ui.k.value, sr: +R.ui.sr.value, noise: +R.ui.noise.value, fail: +R.ui.fail.value });
   function outputs() {
     const p = params();
     $("o-rb-n").textContent = p.n; $("o-rb-a").textContent = p.a.toFixed(1); $("o-rb-b").textContent = p.b; $("o-rb-c").textContent = p.c;
     $("o-rb-k").textContent = p.k.toFixed(1); $("o-rb-speed").textContent = Hp.speedText(R.ui.speed);
+    $("o-rb-sr").textContent = sensed(p) ? p.sr + " m" : "sınırsız"; $("o-rb-noise").textContent = p.noise ? "± " + num(p.noise, 1) + " m" : "yok"; $("o-rb-fail").textContent = p.fail;
     const d = deltaOf(p), e = epsOf(p);
     $("rb-derived").innerHTML = d > 0
       ? `δ = √(${p.c} × ln(${p.b}/${num(p.a, 1)})) = <b>${num(d)} m</b><br>ε = (${p.b}/${num(p.a, 1)}) × √(${p.c}/2) × e<sup>−1/2</sup> = <b>${num(e, 1)} m</b>`
@@ -4246,6 +4280,7 @@ select.sel {
   function restart() {
     R.sim = new Swarm(params(), R.ui.env.value, (Math.random() * 1e9) | 0);
     let far = 0; R.sim.x.forEach((q, i) => {
+      if (R.sim.dead.has(i)) return;
       const d = Math.hypot(q[0] - R.sim.c[0], q[1] - R.sim.c[1]);
       if (d > Math.hypot(R.sim.x[far][0] - R.sim.c[0], R.sim.x[far][1] - R.sim.c[1])) far = i;
     });
@@ -4301,14 +4336,20 @@ select.sel {
     if (I) {
       const [fx, fy] = toPx(I.from), sc = DT * AS * R.s;
       if (delta > 0) dashedCircle(ctx, fx, fy, delta * R.s, C.sep, 0.7);
+      if (sensed(p)) {
+        dashedCircle(ctx, fx, fy, p.sr * R.s, C.accent, 0.85);
+        if (guided && ph.u < 0.4) Hp.label(ctx, R.W, R.H, fx, fy + p.sr * R.s + 12, "görüş menzili", C.accent);
+      }
       if (ph.u < 0.6 || !guided) {
         ctx.save(); ctx.globalAlpha = guided ? 1 - 0.6 * ph.b : 0.35;
         I.pairs.forEach((q) => {
-          const other = s.prev[q.j], [ox, oy] = toPx(other), col = q.k > 0 ? C.coh : C.sep;
+          const other = q.seen || s.prev[q.j], [ox, oy] = toPx(other), col = q.k > 0 ? C.coh : C.sep;
           ctx.save(); ctx.globalAlpha *= 0.35; ctx.strokeStyle = col; ctx.lineWidth = 1;
           ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(ox, oy); ctx.stroke(); ctx.restore();
           const grow = guided ? ph.a : 1;
           Hp.arrow(ctx, fx, fy, fx + q.g[0] * sc * grow, fy + q.g[1] * sc * grow, col, 1.8);
+          // with sensor noise, the hollow ring is where the robot thinks its neighbour is
+          if (p.noise) { ctx.beginPath(); ctx.arc(ox, oy, 4, 0, TAU); ctx.strokeStyle = col; ctx.lineWidth = 1.4; ctx.stroke(); }
         });
         ctx.restore();
       }
@@ -4328,8 +4369,12 @@ select.sel {
     pos.forEach((q, i) => {
       const [a, b] = toPx(q), isSel = i === s.sel;
       ctx.beginPath(); ctx.arc(a, b, isSel ? rr + 2 : rr, 0, TAU);
-      ctx.fillStyle = isSel ? C.accent : C.ink; ctx.fill();
+      ctx.fillStyle = isSel ? C.accent : s.dead.has(i) ? C.muted : C.ink; ctx.fill();
       ctx.strokeStyle = C.surface; ctx.lineWidth = 1.8; ctx.stroke();
+      if (s.dead.has(i)) {
+        const h = rr * 0.6; ctx.strokeStyle = C.sep; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(a - h, b - h); ctx.lineTo(a + h, b + h); ctx.moveTo(a + h, b - h); ctx.lineTo(a - h, b + h); ctx.stroke();
+      }
     });
     $("rb-iter").textContent = `Tur ${s.iter} / ${MAX}`;
   }
@@ -4338,12 +4383,14 @@ select.sel {
     const box = $("rb-phases"), chips = Array.from(box.children); box.hidden = !guided;
     let k = -1, text;
     const envTxt = s.envKind === "none" ? "" : " Buna çevrenin etkisi ekleniyor (mavi ok): yiyeceğe doğru, tehlikeden uzağa.";
-    if (s.iter >= MAX && u >= 1) text = `Bitti: ${MAX} tur. Sürü yarıçapı ${num(s.rad, 1)} m` + (epsOf(p) > 0 ? `, kitaptaki sınır ε = ${num(epsOf(p), 1)} m.` : ".") + " “Karıştır” ile yeni bir başlangıç dene.";
+    if (s.iter >= MAX && u >= 1) text = `Bitti: ${MAX} tur. Sürü yarıçapı ${num(s.rad, 1)} m` + (epsOf(p) > 0 ? `, kitaptaki sınır ε = ${num(epsOf(p), 1)} m.` : ".") + (sensed(p) && s.parts > 1 ? ` Sürü ${s.parts} parçaya bölündü: parçalar birbirini göremediği için bir daha birleşemez.` : "") + (s.dead.size ? ` ${s.dead.size} arızalı robot yerinde kaldı.` : "") + " “Karıştır” ile yeni bir başlangıç dene.";
     else if (!guided) text = `Tur ${s.iter}: sürü yarıçapı ${num(s.rad, 1)} m, en yakın iki robot ${num(s.minD)} m.`;
     else if (u < 0.4) {
       k = 0;
       text = d > 0 ? `Turuncu robot her robota bakıyor. Rahat mesafeden (δ = ${num(d)} m, kırmızı kesikli daire) uzaktaysa ona çekiliyor (yeşil ok), daha yakındaysa itiliyor (kırmızı ok).`
         : "Turuncu robot her robota bakıyor. b ≤ a olduğu için itme hiçbir mesafede kazanamıyor: herkes herkesi çekiyor.";
+      if (sensed(p) && s.info) text += ` Ama görüş menzili ${p.sr} m: ${s.info.unseen} robotu hiç görmüyor (turuncu kesikli daire), onları hesaba katamıyor.`;
+      if (p.noise) text += ` Komşularının yerini ± ${num(p.noise, 1)} m hatayla ölçüyor (içi boş halkalar: sandığı yerler).`;
     } else if (u < 0.6) { k = 1; text = "Bütün çekim ve itmeler toplanıyor (siyah ok)." + envTxt + " Turuncu ok robotun bu turdaki hızı."; }
     else {
       k = 2;
@@ -4370,6 +4417,9 @@ select.sel {
           <dt>Ayarlar</dt><dd>a = ${num(p.a, 1)} · b = ${p.b} · c = ${p.c} · ${p.n} robot</dd>
           <dt>Rahat mesafe</dt><dd>${d > 0 ? `δ = √(${p.c} × ln(${p.b}/${num(p.a, 1)})) = ${num(d)} m` : "yok (b ≤ a)"}</dd>
           <dt>Kitaptaki sınır</dt><dd>${e > 0 ? `ε = (${p.b}/${num(p.a, 1)}) × √(${p.c}/2) × e<sup>−1/2</sup> = ${num(e, 1)} m` : "yok (b ≤ a)"}</dd>
+          ${sensed(p) ? `<dt>Görüş menzili</dt><dd>${p.sr} m: ${I.pairs.length} robotu görüyor, ${I.unseen} robotu görmüyor. Kanıt herkesin herkesi gördüğünü varsaydığı için ε sınırı burada garanti değil.</dd>` : ""}
+          ${p.noise ? `<dt>Sensör</dt><dd>Komşuların yeri ± ${num(p.noise, 1)} m hatayla ölçülüyor; aşağıdaki uzaklıklar ölçülen (hatalı) değerler.</dd>` : ""}
+          ${s.dead.has(s.sel) ? "<dt>Durum</dt><dd><b>Bu robot arızalı:</b> hesabı yapıyor ama hareket edemiyor.</dd>" : ""}
         </dl></div>
         <div class="calc-sec" data-k="0"><h4>1 · Komşulara bak: her biri için g = −y × (a − b·e<sup>−r²/c</sup>)</h4>
           <div class="tablewrap"><table class="calc-t"><thead><tr><th>Robot</th><th>Uzaklık r (m)</th><th>İtme payı b·e<sup>−r²/c</sup></th><th>k = a − itme payı</th><th>Tür</th><th>g (m/sn)</th></tr></thead><tbody>${rows}</tbody></table></div>
@@ -4398,7 +4448,9 @@ select.sel {
     $("rb-min").textContent = num(s.minD);
     $("rb-rad").textContent = num(s.rad, 1);
     $("rb-eps").textContent = e > 0 ? num(e, 1) : "yok";
-    $("rb-drift").textContent = num(s.drift);
+    // with a limited sensing range the interesting number is how many pieces the swarm broke into
+    $("rb-drift").previousElementSibling.textContent = sensed(s.p) ? "Kopuk parça" : "Merkezin kayması (m)";
+    $("rb-drift").textContent = sensed(s.p) ? s.parts : num(s.drift);
   }
   function render() {
     draw();
@@ -4422,6 +4474,10 @@ select.sel {
   ["a", "b", "c"].forEach((k) => R.ui[k].addEventListener("input", () => {
     outputs(); markActive(); Object.assign(R.sim.p, params()); R.lastIter = -1; render();
   }));
+  ["sr", "noise"].forEach((k) => R.ui[k].addEventListener("input", () => {
+    outputs(); markActive(); Object.assign(R.sim.p, params()); R.lastIter = -1; render();
+  }));
+  R.ui.fail.addEventListener("input", () => { outputs(); markActive(); restart(); R.run.set(!reduceMotion); render(); });
   R.ui.k.addEventListener("input", () => { outputs(); markActive(); R.sim.setEnv(R.ui.env.value, +R.ui.k.value); buildHeat(); render(); });
   R.ui.env.addEventListener("change", () => { markActive(); R.sim.setEnv(R.ui.env.value, +R.ui.k.value); buildHeat(); R.lastIter = -1; render(); });
   R.ui.n.addEventListener("input", () => { outputs(); restart(); R.run.set(!reduceMotion); render(); });
@@ -4455,16 +4511,19 @@ select.sel {
     { id: "b0", name: "İtme kapalı (b = 0)", a: 1, b: 0, c: 10, env: "none", k: 1, expect: "Herkes herkesi çeker, kimse itmez. Robotlar tek noktada üst üste biner: en yakın mesafe 0'a düşer, yani çarpışma." },
     { id: "b60", name: "Güçlü itme (b = 60)", a: 1, b: 60, c: 10, env: "none", k: 1, expect: "Rahat mesafe büyür, sürü genişler. ε de büyür; ölçülen yarıçap yine de sınırın içinde." },
     { id: "c40", name: "Uzun menzilli itme (c = 40)", a: 1, b: 20, c: 40, env: "none", k: 1, expect: "İtme daha uzaktan hissedilir. Robotlar daha seyrek, düzenli bir desen oluşturur." },
+    { id: "gorus", name: "Kısa görüş (15 m)", a: 1, b: 20, c: 10, env: "none", k: 1, sr: 15, expect: "Her robot sadece 15 m içini görüyor. Sürü ortalama 2 parçaya bölünüyor ve parçalar birbirini göremediği için bir daha birleşmiyor. Yarıçap 4.6 m yerine 18.5 m; ε sınırı 30 denemenin 3'ünde aşıldı. Kitaptaki garanti, herkesin herkesi gördüğü varsayımına dayanıyor." },
+    { id: "gurultu", name: "Gürültülü sensör (± 1 m)", a: 1, b: 20, c: 10, env: "none", k: 1, noise: 1, expect: "Sürü yine toplanıyor, boyutu da neredeyse aynı (4.8 m). Ama hiç durulmuyor: her turda yeni ölçüm hataları robotları titretiyor. Kural gürültüye dayanıklı, ama robotlar boşuna enerji harcıyor." },
+    { id: "ariza", name: "2 robot arızalı", a: 1, b: 20, c: 10, env: "none", k: 1, fail: 2, expect: "Arızalı 2 robot (gri, ✕) yerinde kalıyor. Diğerleri onları görmeye ve çekmeye devam ettiği için sürü onlara doğru uzuyor: yarıçap 4.6 m yerine 9.3 m. Sınır yine tutuyor ama sürü arızalı robotlara bağlı kalıyor." },
     { id: "kaynak", name: "Tek kaynağa git", a: 1, b: 20, c: 10, env: "bowl", k: 1, expect: "Sürü şeklini bozmadan sağdaki kaynağa kayar. PSO'daki “iyi bölgeye çekil, gruptan kopma” fikrinin robot hâli." },
     { id: "yiyecek", name: "Yiyecekler ve tehlike", a: 1, b: 20, c: 10, env: "spots", k: 1, expect: "Sürü tehlikeden kaçar, yiyeceklerden birine yerleşir. Haritaya tıklayıp yeni yiyecek ya da tehlike ekleyebilirsin." },
   ];
   const expBox = $("rb-exps");
   EXPS.forEach((e) => {
     const row = document.createElement("div"); row.className = "exp"; row.dataset.id = e.id;
-    row.innerHTML = `<div><b>${e.name}</b><span>${e.expect}</span><br><code>a ${e.a} · b ${e.b} · c ${e.c}${e.env === "none" ? "" : " · çevre açık"}</code></div>`;
+    row.innerHTML = `<div><b>${e.name}</b><span>${e.expect}</span><br><code>a ${e.a} · b ${e.b} · c ${e.c}${e.env === "none" ? "" : " · çevre açık"}${e.sr ? " · görüş " + e.sr + " m" : ""}${e.noise ? " · gürültü ± " + e.noise + " m" : ""}${e.fail ? " · " + e.fail + " arızalı" : ""}</code></div>`;
     const b = document.createElement("button"); b.className = "b"; b.textContent = "Dene";
     b.addEventListener("click", () => {
-      R.ui.a.value = e.a; R.ui.b.value = e.b; R.ui.c.value = e.c; R.ui.env.value = e.env; R.ui.k.value = e.k; R.ui.n.value = e.n || 10;
+      R.ui.a.value = e.a; R.ui.b.value = e.b; R.ui.c.value = e.c; R.ui.env.value = e.env; R.ui.k.value = e.k; R.ui.n.value = e.n || 10; R.ui.sr.value = e.sr || 65; R.ui.noise.value = e.noise || 0; R.ui.fail.value = e.fail || 0;
       outputs(); markActive(); buildHeat(); restart(); R.run.set(true); render();
       status(`“${e.name}” yüklendi. İzle, sonra “Bu ayarla 30 kez çalıştır” ile ölç.`);
     });
@@ -4474,15 +4533,15 @@ select.sel {
     const p = params(), env = R.ui.env.value;
     expBox.querySelectorAll(".exp").forEach((row) => {
       const e = EXPS.find((x) => x.id === row.dataset.id);
-      row.dataset.active = String(e.a === p.a && e.b === p.b && e.c === p.c && e.env === env && (e.n || 10) === p.n);
+      row.dataset.active = String(e.a === p.a && e.b === p.b && e.c === p.c && e.env === env && (e.n || 10) === p.n && (e.sr || 65) === p.sr && (e.noise || 0) === p.noise && (e.fail || 0) === p.fail);
     });
   }
   markActive();
 
   // ---------- proof check table ----------
-  const KEY = "suru-lab-robot-rows-v2";
+  const KEY = "suru-lab-robot-rows-v3";
   const status = (t) => { $("rb-status").textContent = t; };
-  const mkRow = (label, p, example) => Object.assign({ label, example, n: p.n, a: p.a, b: p.b, c: p.c }, runRobot30(p));
+  const mkRow = (label, p, example) => Object.assign({ label, example, n: p.n, a: p.a, b: p.b, c: p.c, sr: p.sr || FULL_SR, noise: p.noise || 0, fail: p.fail || 0 }, runRobot30(p));
   function exampleRows() {
     return [
       mkRow("Bir arada durma", { n: 10, a: 1, b: 20, c: 10, k: 1 }, true),
@@ -4490,6 +4549,9 @@ select.sel {
       mkRow("Uzun menzilli itme (c = 40)", { n: 10, a: 1, b: 20, c: 40, k: 1 }, true),
       mkRow("Kalabalık (30 robot)", { n: 30, a: 1, b: 20, c: 10, k: 1 }, true),
       mkRow("İtme kapalı (b = 0)", { n: 10, a: 1, b: 0, c: 10, k: 1 }, true),
+      mkRow("Kısa görüş (15 m)", { n: 10, a: 1, b: 20, c: 10, k: 1, sr: 15 }, true),
+      mkRow("Gürültülü sensör (± 1 m)", { n: 10, a: 1, b: 20, c: 10, k: 1, noise: 1 }, true),
+      mkRow("2 robot arızalı", { n: 10, a: 1, b: 20, c: 10, k: 1, fail: 2 }, true),
     ];
   }
   let rows = Hp.loadRows(KEY) || exampleRows();
@@ -4497,23 +4559,23 @@ select.sel {
     const tb = $("rb-rows"); tb.innerHTML = "";
     rows.forEach((r, i) => {
       const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${i + 1}</td><td>${r.label}${r.example ? '<span class="tag">örnek</span>' : ""}</td><td>${r.n}</td><td>${num(r.a, 1)}</td><td>${r.b}</td><td>${r.c}</td>` +
+      tr.innerHTML = `<td>${i + 1}</td><td>${r.label}${r.example ? '<span class="tag">örnek</span>' : ""}</td><td>${r.n}</td><td>${num(r.a, 1)}</td><td>${r.b}</td><td>${r.c}</td><td>${r.sr < FULL_SR ? r.sr + " m" : "sınırsız"}</td><td>${r.noise ? "± " + num(r.noise, 1) : "–"}</td><td>${r.fail || "–"}</td>` +
         `<td>${r.delta > 0 ? num(r.delta) : "yok"}</td><td>${r.eps > 0 ? num(r.eps, 1) : "yok"}</td><td>${num(r.rad, 1)}</td><td>${num(r.min)}</td><td>${Math.round(r.settle)}</td>` +
-        `<td>${r.held === null ? "–" : Math.round(r.held * 30) + " / 30"}</td>`;
+        `<td>${r.held === null ? "–" : Math.round(r.held * 30) + " / 30"}</td><td>${r.sr < FULL_SR ? num(r.parts, 1) : "–"}</td>`;
       tb.appendChild(tr);
     });
   }
   renderRows();
   $("rb-run30").addEventListener("click", (ev) => Hp.busy(ev.currentTarget, () => {
-    const p = params(), e = EXPS.find((x) => x.a === p.a && x.b === p.b && x.c === p.c && x.env === "none" && (x.n || 10) === p.n);
+    const p = params(), e = EXPS.find((x) => x.a === p.a && x.b === p.b && x.c === p.c && x.env === "none" && (x.n || 10) === p.n && (x.sr || 65) === p.sr && (x.noise || 0) === p.noise && (x.fail || 0) === p.fail);
     rows.push(mkRow((e ? e.name : "Kendi ayarım") + " (benim)", p, false)); Hp.saveRows(KEY, rows); renderRows();
     const r = rows[rows.length - 1];
     status(`Satır ${rows.length}: ölçülen yarıçap ${num(r.rad, 1)} m` + (r.eps > 0 ? `, kitaptaki sınır ${num(r.eps, 1)} m; sınır ${Math.round(r.held * 30)} / 30 denemede tuttu.` : "; b ≤ a olduğu için sınır yok.") + " Çevre bu testte kapalıdır.");
   }));
   $("rb-copy").addEventListener("click", () => {
-    const head = ["#", "Ayar", "N", "a", "b", "c", "δ (m)", "ε kitap (m)", "Ölçülen yarıçap (m)", "En yakın (m)", "Durulma (tur)", "Sınır tuttu"];
-    const lines = [head.join("\t")].concat(rows.map((r, i) => [i + 1, r.label + (r.example ? " (örnek)" : ""), r.n, r.a, r.b, r.c,
-      r.delta > 0 ? num(r.delta) : "yok", r.eps > 0 ? num(r.eps, 1) : "yok", num(r.rad, 1), num(r.min), Math.round(r.settle), r.held === null ? "-" : Math.round(r.held * 30) + "/30"].join("\t")));
+    const head = ["#", "Ayar", "N", "a", "b", "c", "Görüş (m)", "Gürültü (m)", "Arıza", "δ (m)", "ε kitap (m)", "Ölçülen yarıçap (m)", "En yakın (m)", "Durulma (tur)", "Sınır tuttu", "Kopuk parça"];
+    const lines = [head.join("\t")].concat(rows.map((r, i) => [i + 1, r.label + (r.example ? " (örnek)" : ""), r.n, r.a, r.b, r.c, r.sr < FULL_SR ? r.sr : "sınırsız", r.noise || 0, r.fail || 0,
+      r.delta > 0 ? num(r.delta) : "yok", r.eps > 0 ? num(r.eps, 1) : "yok", num(r.rad, 1), num(r.min), Math.round(r.settle), r.held === null ? "-" : Math.round(r.held * 30) + "/30", r.sr < FULL_SR ? num(r.parts, 1) : "-"].join("\t")));
     Hp.copyTable(lines.join("\n"), status);
   });
   Hp.armClear($("rb-clear"), () => { rows = exampleRows(); Hp.saveRows(KEY, rows); renderRows(); status("Kendi satırların silindi; örnek satırlar yeniden ölçüldü."); });
@@ -6874,6 +6936,8 @@ select.sel {
       box.appendChild(el);
     });
   });
+
+  document.querySelectorAll("#view-gr [data-open]").forEach((b) => b.addEventListener("click", () => open(b.dataset.open)));
 
   // ---------- quiz ----------
   const QUIZ = [
